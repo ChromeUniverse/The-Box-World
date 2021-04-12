@@ -14,21 +14,75 @@ wss.on("connection",
 
 		// When new data is received
 		ws.on("message", data => {
-      let json_data = JSON.parse(data);
-      let username = json_data["username"];
-      players.push(username);
+      let dataJson = JSON.parse(data);
+      let dataStatus = dataJson["status"];
       
-      console.log("New user connected:" + username);
-      console.log("Players logged in:" + players);
+      // trigerred on every new login event
+      if (dataStatus == "login") {
+        
+        // get new player name and color
+        let newPlayerName = dataJson['name'];
+        let newPlayerColor = dataJson['color'];
+        let newPlayerX = dataJson['x'];
+        let newPlayerY = dataJson['y'];
+        console.log("\nNew user connected:" + newPlayerName);
 
+        // add new player to player list
+        let newPlayerEntry = {
+          name: newPlayerName,
+          color: newPlayerColor,
+          x: newPlayerX,
+          y: newPlayerY,
+        }
+        players.push(newPlayerEntry);
+        console.log(players);
 
-			// Resend new data to all clients...
-			wss.clients.forEach(client => {
-				if (client.readyState === WebSocket.OPEN) {
-					// ... but only if their WS is still open
-					client.send(data);
-				}
-			});
+        /*
+        // Resend login event to all connected clients
+        wss.clients.forEach(client => {
+          if (client.readyState === WebSocket.OPEN) {
+            // building JSON
+            let newPlayerData = JSON.stringify(
+              {
+                type: 'new_player',
+                name: newPlayerName,
+                color: newPlayerColor,
+                x: 100,
+                y: 100
+              }
+            );
+            // send JSON
+            client.send(newPlayerData);
+          }
+        });
+        */
+      }
+
+      // triggered on every new move event
+      if (dataStatus == "move") {
+        wss.clients.forEach(client => {
+          if (client.readyState === WebSocket.OPEN) {
+            // updating players list
+            players.forEach(p => {
+              if (p['name'] == dataJson['name']){
+                p['x'] = dataJson['x'];
+                p['y'] = dataJson['y'];
+              }
+            })
+
+            // building JSON
+            let roomState = JSON.stringify(
+              {
+                status: 'room_update',
+                player_list: players
+              }
+            );
+            // send JSON
+            client.send(roomState);
+          }
+        });
+      }
+      
 
 		});
 

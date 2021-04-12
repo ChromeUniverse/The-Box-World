@@ -1,0 +1,90 @@
+*** client -> server ***
+
+// login
+{
+  type: login,
+  name: Lucca,
+  color: "#ABCDEF"
+}
+
+// player movement
+{ 
+  type: move,
+  name: Lucca,
+  key_presses: {
+    'up': true,
+    'down': false,
+    'left': true,
+    'right': false
+  }
+}
+
+*** server -> client ***
+
+// room_update
+
+{
+  type: room_update,
+  player_list: [
+    {
+      name: Lucca,
+      position: pos
+    },
+    {
+      name: qrno,
+      postion: pos
+    },
+    {
+      name: Vilsu,
+      position: pos
+    },
+    {
+      name: Tyuk3,
+      position: pos
+    }
+  ]
+}
+
+{
+  type: room_update,
+  player_list: [
+    {
+      name: Lucca,
+      position: pos
+    },
+    {
+      name: qrno,
+      postion: pos
+    },
+    {
+      name: Vilsu,
+      position: pos
+    },
+    {
+      name: Tyuk3,
+      position: pos
+    }
+  ]
+}
+
+// new player
+{
+  type: new_player,
+  name: Lucca
+}
+
+// remove player
+{
+  type: remove_player,
+  name: Lucca
+}
+
+// player text message
+
+{
+  type: text_message,
+  message: {
+    name: Vilsu,
+    content: "bora no sync tube ver video essay sobre cinematografia em anime, é muito bom uwu"
+  }
+}
