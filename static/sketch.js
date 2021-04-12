@@ -15,7 +15,7 @@ var speedX = 10;
 var speedY = 10;
 
 // text to be displayed
-var name = 'Lucca';
+var name = expressName;
 
 function setup() {
   // colors 

@@ -1,5 +1,3 @@
-
-
 // HTTP library
 const http = require('http');
 // filesystem library
@@ -34,24 +32,41 @@ const sendFile = function(fileName, res) {
 
 // creating HTTP server
 const server = http.createServer(function(req, res){
-  // files object
-  var routes = {
-    '/':'index.html',
-    '/hello.html':'hello.html',
-    '/sketch.js':'sketch.js',
-    '/client.js':'client.js',
-  }
-  // checking if file is available
-  var hasFile = routes.hasOwnProperty(req.url);
-  if (hasFile) {
-    // file found
-    var fileName = routes[req.url];
-    sendFile(fileName, res);
-  } else {
-    // not found 404
-    res.writeHead(404);
+
+  console.log(req.method)
+
+  if (req.method == "GET") {
+    // files object
+    var routes = {
+      '/':'static/hello.html',
+      '/room':'static/room.html',
+      '/sketch':'static/sketch.js',
+      '/frontend':'static/client.js',
+    }
+
+    // checking if file is available
+    var hasFile = routes.hasOwnProperty(req.url);
+    if (hasFile) {
+      // file found
+      var fileName = routes[req.url];
+      sendFile(fileName, res);
+    } else {
+      // not found 404
+      res.writeHead(404);
+      res.end();
+    }
+
+  } 
+  
+  if (req.method == 'POST') {
+    var routes = {
+      '/room':'static/index.html',
+    }
+    console.log(req);
+    res.writeHead(200);
     res.end();
   }
+
 })
 
 // initializing HTTP server
