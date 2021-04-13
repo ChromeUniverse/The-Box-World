@@ -141,13 +141,7 @@ ws.addEventListener("message", msg => {
       players = players_copy;
       
     });
-    console.log(players);
-    //console.log(dataJson);
-    //console.log(players)
   }
-  
-
-  //console.table(dataJson);
 });
 
 
@@ -178,7 +172,11 @@ let user = new Player(
 // Main setup function
 function setup() {
   createCanvas(canvasW, canvasH);
-  
+
+  // ping the server every second or so
+  setInterval(() => {    
+      ping();      
+  }, 1000);
 }
 
 
@@ -254,11 +252,7 @@ function inFront(p1, p2){
 
 
 function draw() {
-  console.log("here is players: " + players)
   background(220);
-
-  // ping the server
-  ping();
 
   // move user's player 
   move(user);
@@ -271,8 +265,7 @@ function draw() {
 
   // render players
   players.forEach(p => {
-    console.log(players)
-    p.display();
-  }); 
+    p.display()
+  }) 
 
 }
