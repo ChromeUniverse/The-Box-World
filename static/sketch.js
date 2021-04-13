@@ -142,47 +142,55 @@ function setup() {
 
 // change user position based on keypresses
 function move(user) {
+  let moved = false;
   if (keyIsDown(LEFT_ARROW)) {
+    moved = true;
     user.x -= speedX;  
     if (user.x < thingyW/2) {
       user.x = thingyW/2;
     }
   }
   if (keyIsDown(RIGHT_ARROW)) {
+    moved = true;
     user.x += speedX;  
     if (user.x > canvasW-thingyW/2) {
       user.x = canvasW-thingyW/2;
     }
   }
   if (keyIsDown(UP_ARROW)) {
+    moved = true;
     user.y -= speedY;  
     if (user.y < thingyH/2) {
       user.y = thingyH/2;
     }
   }
   if (keyIsDown(DOWN_ARROW)) {
+    moved = true;
     user.y += speedY;  
     if (user.y > canvasH-thingyH/2) {
       user.y = canvasH-thingyH/2;
     }
   }
+  return moved;
 }
 
 
 
 // sends current position 
 function sendPos(user) {
-  ws.send(
-    JSON.stringify(
-      {
-        status: 'move',
-        name: user.name,
-        color: user.col,
-        x: user.x,
-        y: user.y
-      }
-    )
-  );
+  if (move()) {
+    ws.send(
+      JSON.stringify(
+        {
+          status: 'move',
+          name: user.name,
+          color: user.col,
+          x: user.x,
+          y: user.y
+        }
+      )
+    );
+  }
 }
 
 
