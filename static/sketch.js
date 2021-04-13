@@ -227,8 +227,6 @@ function draw() {
 
   // only run with websocket is open
   if (ws.readyState == 1) {
-    // move user's player 
-    move(user);
     // send position via websockets
     sendPos(user);
   }
