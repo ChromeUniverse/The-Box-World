@@ -105,23 +105,6 @@ ws.addEventListener("message", msg => {
     players.push(new Player(newPlayerName, newPlayerColor, newPlayerX, newPlayerY));
   }
 
-
-  // remove player from room
-  if (dataStatus == 'remove_player'){
-    //console.log('Remove one player');
-    var playerName = dataJson['name'];
-    var players_copy = [];
-
-    for (var i = 0; i < players.length; i++) {
-      var player = players[i];
-      if (players[i].name != playerName) {
-        players_copy.push(player);
-      }
-    }
-    players = players_copy;
-  }
-
-
   // update room state
   if (dataStatus == 'room_update'){
     /*

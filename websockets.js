@@ -44,80 +44,92 @@ wss.on("connection",
       
       
       // triggered on every new 'move' event
-      if (dataStatus == "move") {
-        wss.clients.forEach(client => {
-          if (client.readyState === WebSocket.OPEN) {          
-
-            // find who sent the 'move' update
-            for (let i = 0; i < players.length; i++) {
-              let p = players[i];
-              // found the player who sent the 'move' event        
-              if (p['name'] == dataJson['name']){
-                   
-                // update player coordinates 
-                p['x'] = dataJson['x'];
-                p['y'] = dataJson['y'];
-        
-                break;
-              }
-            }
-
-          
-
-            // building JSON
-            let roomState = JSON.stringify(
-              {
-                status: 'room_update',
-                player_list: players
-              }
-            );
-            // send JSON
-            client.send(roomState);
+      if (dataStatus == "move") {                    
+        // find who sent the 'move' update
+        for (let i = 0; i < players.length; i++) {
+          let p = players[i];
+          // found the player who sent the 'move' event        
+          if (p['name'] == dataJson['name']){
+                
+            // update player coordinates 
+            p['x'] = dataJson['x'];
+            p['y'] = dataJson['y'];
+    
+            break;
           }
-        });
+        }                      
       }
 
 
 
-      // trigdered on every new 'ping' evert
+      // triggered on every new 'ping' evert
       if (dataStatus == 'ping') {
 
         // find the pinger
         for (let i = 0; i < players.length; i++) {
           // found the pinger 
-          if (players[i]['name'] == dataJson['name']){
-            // update player's last active time
+          if (players[i]['name'] == dataJson['name']){          
+            // current time in seconds
             let time_now = Math.round(Date.now() / 1000); 
+            // update player's last active time
             players[i]['time'] = time_now;
             break;
           }
         }
-
-        // creating copy of players list
-        var players_copy = []; 
-
-        // check every player for last active time
-        for (let i = 0; i < players.length; i++) {
-          let p = players[i];
-
-          let time_now = Math.round(Date.now() / 1000);
-          let last_active_time = p['time'];
-          let timeout = 2;
-
-          // skip over timed out player
-          if (time_now - last_active_time >= timeout) {
-            console.log("User '" + p['name'] + "' has timed out!");
-            continue;
-          } 
-
-          players_copy.push(p);
-        }
-        
-        // update players list
-        players = players_copy;
       }
 
 		});
+
+    // send room state to all clients every [interval] milliseconds
+    var interval1 = 0;
+    setInterval(() => {
+      wss.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+          // building JSON
+          let roomState = JSON.stringify(
+            {
+              status: 'room_update',
+              player_list: players
+            }
+          );
+          // send JSON
+          client.send(roomState);
+        }
+      });
+    }, interval1);
+
+
+
+
+    // check for inactive clients and remove them from player list
+    let interval2 = 1000;
+    setInterval(() => {
+      // creating copy of players list
+      var players_copy = []; 
+
+      // check every player for last active time
+      for (let i = 0; i < players.length; i++) {
+        let p = players[i];
+
+        // current time in seconds
+        let time_now = Math.round(Date.now() / 1000);
+        let last_active_time = p['time'];
+        let timeout = 3;
+
+        // skip over timed out players
+        if (time_now - last_active_time >= timeout) {
+          console.log("User '" + p['name'] + "' has timed out!");
+          continue;
+        } 
+
+        // add active players to copy of player list
+        players_copy.push(p);
+      }
+      
+      // update players list
+      players = players_copy;
+    }, interval2);
+    
 
 		// When the WS is closed
 		ws.on("close", () => {
