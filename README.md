@@ -24,8 +24,9 @@ _Coming soon_
 
 ## Todo
 
-...
-
+* Add 'Leave' button
+* Add message/chat feature
+ 
 ## Gallery
 
 ![here](https://media.discordapp.net/attachments/760252264723644426/831382969770967110/unknown.png?width=650&height=550)
