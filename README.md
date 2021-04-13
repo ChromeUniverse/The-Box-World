@@ -2,9 +2,9 @@
 
 This is full-stack JavaScript application.
 
-* **Backend** - Two Node.js servers: 
-  * One for serving static files (HTMLs and JS scripts)
-  * Another one for handling real-time communication over Websockets
+* **Backend** - Two Node.js servers using the **forever** npm package
+  * One for serving static files (HTMLs and JS scripts) (**Express**)
+  * Another one for handling real-time communication over Websockets (**ws**)
 
 * **Frontend**
   * [p5.js](https://p5js.org/) for graphics
