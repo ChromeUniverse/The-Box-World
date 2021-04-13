@@ -65,7 +65,7 @@ class Player{
 
 
 // new websocket connection
-const ws = new WebSocket("ws://localhost:2848");
+const ws = new WebSocket("ws://34.200.98.64:2848");
 
 // on connection
 ws.addEventListener("open", () => {
