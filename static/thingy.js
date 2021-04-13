@@ -81,6 +81,7 @@ ws.addEventListener("open", () => {
       }
     )
   );
+
 });
 
 // data received from server
@@ -174,9 +175,7 @@ function setup() {
   createCanvas(canvasW, canvasH);
 
   // ping the server every second or so
-  setInterval(() => {    
-      ping();      
-  }, 1000);
+  setInterval(() => { ping();}, 1000);
 }
 
 
@@ -253,6 +252,8 @@ function inFront(p1, p2){
 
 function draw() {
   background(220);
+
+  while (ws.readyState != 1) {}
 
   // move user's player 
   move(user);
