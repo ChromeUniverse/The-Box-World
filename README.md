@@ -26,6 +26,7 @@ _Coming soon_
 
 * Add 'Leave' button
 * Add message/chat feature
+* Check for two users with the same name
  
 ## Gallery
 
