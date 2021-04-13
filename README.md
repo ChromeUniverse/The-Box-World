@@ -14,6 +14,14 @@ This is full-stack JavaScript application.
 
 _Coming soon_
 
+## Folder Structure
+
+_Coming soon_
+
+## Working features
+
+_Coming soon_
+
 ## Todo
 
 ...
