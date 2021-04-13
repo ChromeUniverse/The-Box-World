@@ -1,69 +1,235 @@
-///
-/// Player class
-///
-
-class Player{
-  constructor(name, x, y){
-    this.x = x;
-    this.y = y;
-    this.dimensionX = 80;
-    this.dimensionY = 80;
-    this.col = playerColor;
-    this.name = name;
-  }
-  
-  /*
-  move(dir){
-    this.velocity.add(dir.mult(this.acceleration))
-    this.velocity.mult(this.damping);
-    this.position.add(this.velocity)
-  }
-  */
-  
-  underMouse() {
-    return mouseX >= this.x-this.dimensionX/2 &&
-           mouseX <= this.x+this.dimensionX/2 &&
-           mouseY >= this.y-this.dimensionY/2 &&
-           mouseY <= this.y+this.dimensionY/2;
-  }
-  
-  display(){
-    noStroke();
-    fill (this.col);
-    rectMode(CENTER);
-    
-    rect(this.x, this.y, this.dimensionX, this.dimensionY, 12, 12);
-    
-    if (this.underMouse()){
-      textSize(20);
-      fill(color(255))
-      textAlign(CENTER, BOTTOM);
-      text(this.name, this.x, this.y-this.dimensionY/2-8);
-    }
-  }
-
-}
-
-///
-///   getDir 
-///
 /*
-function getDir(){
-  let dirX = 0;
-  let dirY = 0;
-  if (keyIsDown(UP_ARROW))    dir.y --;
-  if (keyIsDown(DOWN_ARROW))  dir.y ++;
-  if (keyIsDown(LEFT_ARROW))  dir.x --;
-  if (keyIsDown(RIGHT_ARROW)) dir.x ++;
-  dir.normalize();
-  return dir;
-}
+
+**************** General Variables ****************
+
 */
 
-///
-///   inFront
-///
+// canvas properties
+const canvasW = 600; 
+const canvasH = 450;
 
+// thingy dimensions
+const thingyW = 40;
+const thingyH = 40;
+
+// initial position
+var x = canvasW/2;
+var y = canvasH/2;
+
+// speed
+var speedX = 5;
+var speedY = 5;
+
+// color palette
+const palette = ["#F18F01", "#048BA8", "#2E4057", "#99C24D", "#2F2D2E", "#19535F", "#0B7A75", "#D7C9AA", "#7B2D26", "#BFCDE0", "#729B79", "#59D2FE"];
+
+
+/*
+
+**************** Player Class ****************
+
+*/
+
+class Player{
+  // creates new player instance
+  constructor(name, col, x, y){
+    this.name = name;
+    this.col = col; // color
+    this.x = x;
+    this.y = y;
+  }
+
+  // renders the player on the canvas
+  display() {
+    // draw rectangle
+    noStroke();
+    fill(this.col);
+    rectMode(CENTER);
+    rect(this.x, this.y, thingyW, thingyH, 12, 12);
+
+    // show player name 
+    textSize(20);
+    fill(color(255));
+    textAlign(CENTER, BOTTOM);
+    text(this.name, this.x, this.y-thingyH/2-8);    
+  }
+}
+
+
+
+/*
+
+**************** Websockets Stuff ****************
+
+*/
+
+
+// new websocket connection
+const ws = new WebSocket("ws://34.200.98.64:2848");
+
+// on connection
+ws.addEventListener("open", () => {
+  console.log("Connected to WS Server");  
+
+  // sending login event to WS server
+  ws.send(
+    JSON.stringify(
+      {
+        status: 'login',
+        name: playerName,
+        color: playerColor,
+      }
+    )
+  );
+
+});
+
+// data received from server
+ws.addEventListener("message", msg => {
+  //console.log("Got: ", msg.data);
+  var dataJson = JSON.parse(msg.data);
+  var dataStatus = dataJson['status'];
+  
+
+  // add new player to room
+  if (dataStatus == 'new_player'){
+    //console.log('Got a new player!');
+    var newPlayerName = dataJson['name'];
+    var newPlayerColor = dataJson['color'];
+    var newPlayerX = dataJson['x'];
+    var newPlayerY = dataJson['y'];
+    
+    //new Player(newPlayerName, newPlayerX, newPlayerY));
+    //let newPlayerEntry = [newPlayerName, newPlayerX, newPlayerY];
+    //players.push(newPlayerEntry);
+    players.push(new Player(newPlayerName, newPlayerColor, newPlayerX, newPlayerY));
+  }
+
+  // update room state
+  if (dataStatus == 'room_update'){
+    /*
+    players.forEach(p => {
+      for (var i = 0; i < dataJson['player_list'].length; i++) {
+        var playerJson = dataJson['player_list'][i];
+        if ( p.name == playerJson['name'] ) {
+          p.x = playerJson['x'];
+          p.y = playerJson['y'];
+        }
+      } 
+    });
+    */
+    var players_copy = [];
+    dataJson['player_list'].forEach(p => {
+      newPlayer = new Player(p['name'], p['color'], p['x'], p['y']);
+      players_copy.push(newPlayer);
+      players = players_copy;
+      
+    });
+  }
+});
+
+
+
+
+
+
+
+/*
+
+**************** Program Setup ****************
+
+*/
+
+
+// list of players
+let players = [];
+
+let minX = thingyW;
+let maxX = canvasW-thingyW;
+
+let minY = thingyH;
+let maxY = canvasH-thingyH;
+
+let userX = Math.floor(Math.random() * (maxX-minX) ) + minX;
+let userY = Math.floor(Math.random() * (maxY-minY) ) + minY;
+
+// represents the actual user
+let user = new Player(
+  playerName, 
+  playerColor, 
+  userX, 
+  userY
+);
+
+players.push(user);
+
+
+// Main setup function
+function setup() {
+  createCanvas(canvasW, canvasH);
+
+  // ping the server every second or so
+  setInterval(() => { ping();}, 1000);
+}
+
+
+// change user position based on keypresses
+function move(user) {
+  if (keyIsDown(LEFT_ARROW)) {
+    user.x -= speedX;  
+    if (user.x < thingyW/2) {
+      user.x = thingyW/2;
+    }
+  }
+  if (keyIsDown(RIGHT_ARROW)) {
+    user.x += speedX;  
+    if (user.x > canvasW-thingyW/2) {
+      user.x = canvasW-thingyW/2;
+    }
+  }
+  if (keyIsDown(UP_ARROW)) {
+    user.y -= speedY;  
+    if (user.y < thingyH/2) {
+      user.y = thingyH/2;
+    }
+  }
+  if (keyIsDown(DOWN_ARROW)) {
+    user.y += speedY;  
+    if (user.y > canvasH-thingyH/2) {
+      user.y = canvasH-thingyH/2;
+    }
+  }
+}
+
+
+
+// sends current position to websockets server
+function sendPos(user) {
+  ws.send(
+    JSON.stringify(
+      {
+        status: 'move',
+        name: user.name,
+        color: user.col,
+        x: user.x,
+        y: user.y
+      }
+    )
+  );
+}
+
+function ping(){
+  ws.send(
+    JSON.stringify(
+      {
+        status: 'ping',
+        name: user.name
+      }
+    )
+  );
+}
+
+// player layering
 function inFront(p1, p2){
   if (p1.y > p2.y)  return 1
   if (p1.y == p2.y) return 0
@@ -71,117 +237,29 @@ function inFront(p1, p2){
 }
 
 
-///
-///   Main code
-///
-
-let players = [];
-
 /*
-[
-  ['Lucca', 100, 100],
-  ['Elon Musk', 150, 12]
-]
+
+**************** Draw Function ****************
+
 */
 
-const ws = new WebSocket("ws://localhost:2848");
-
-ws.addEventListener("open", () => {
-  console.log("Connected to WS Server");  
-  ws.send(
-    JSON.stringify(
-      {
-        type: 'login',
-        name: playerName
-      }
-    )
-  );
-});
-
-// data received from server
-ws.addEventListener("message", msg => {
-  //console.log("Got: ", msg.data);
-  let dataJson = JSON.parse(msg.data);
-  let dataType = dataJson['type'];
-  
-  // add new player to room
-  if (dataType = 'new_player'){
-    let newPlayerName = dataJson['name'];
-    let newPlayerX = dataJson['x'];
-    let newPlayerY = dataJson['y'];
-    //new Player(newPlayerName, newPlayerX, newPlayerY));
-    //let newPlayerEntry = [newPlayerName, newPlayerX, newPlayerY];
-    //players.push(newPlayerEntry);
-    players.push(new Player(newPlayerName, newPlayerX, newPlayerY));
-  }
-
-  // remove player from room
-  if (dataType = 'remove_player'){
-    let playerName = dataJson['name'];
-    let players_copy = [];
-
-    for (var i = 0; i < players.length; i++) {
-      let player = players[i];
-      if (players[i].name != playerName) {
-        players_copy.push(player);
-      }
-    }
-    players = players_copy;
-  }
-
-  
-  if (dataType = 'room_update'){
-    //console.log(dataJson['player_list'][0]['x']);
-    players.forEach(player => {
-      for (let i = 0; i < dataJson['player_list'].length; i++) {
-        let playerJson = dataJson['player_list'][i];
-        if ( player.name == playerJson['name'] ) {
-          player.x = playerJson['x'];
-          player.y = playerJson['y'];
-        }
-      } 
-    });
-    console.log(players)
-  }
-  
-
-  //console.table(dataJson);
-});
-
-function setup() {
-  createCanvas(600, 600);
-}
-
-
-function send_keys(){
-  let upKey = false;
-  let downKey = false;
-  let leftKey = false;
-  let rightKey = false;
-  if (keyIsDown(UP_ARROW))    upKey = true;
-  if (keyIsDown(DOWN_ARROW))  downKey = true;
-  if (keyIsDown(LEFT_ARROW))  leftKey = true;
-  if (keyIsDown(RIGHT_ARROW)) rightKey = true;
-  keyJson = JSON.stringify(
-    {
-      type: 'move',
-      name: playerName,
-      key_presses: {
-        'up': upKey,
-        'down': downKey,
-        'left': leftKey,
-        'right': rightKey
-      }
-    }
-  );
-  //console.table(keyJson);
-  ws.send(keyJson);
-}
 
 function draw() {
-  background(color('rgba(110, 110, 110, 1)'));
-  send_keys();
+  background(220);
+
+  if (ws.readyState == 1) {
+    // move user's player 
+    move(user);
+    // send position via websockets
+    sendPos(user);
+  }
+
+  // layering
   players.sort(inFront);
-  players.forEach(i => i.display());
+
+  // render players
+  players.forEach(p => {
+    p.display()
+  }) 
 
 }
