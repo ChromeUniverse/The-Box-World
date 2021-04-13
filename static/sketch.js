@@ -17,8 +17,8 @@ const speedX = 5;
 const speedY = 5;
 
 // websockets server
-const server = 'localhost';
-// const server = '34.200.98.64';
+//const server = 'localhost';
+const server = '34.200.98.64';
 
 
 /*
