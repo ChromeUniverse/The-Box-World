@@ -142,14 +142,23 @@ ws.addEventListener("message", msg => {
 
 
 // list of players
-var players = [];
+let players = [];
+
+let minX = thingyW;
+let maxX = canvasW-thingyW;
+
+let minY = thingyH;
+let maxY = canvasH-thingyH;
+
+let userX = Math.floor(Math.random() * (maxX-minX) ) + minX;
+let userY = Math.floor(Math.random() * (maxY-minY) ) + minY;
 
 // represents the actual user
 let user = new Player(
   playerName, 
   playerColor, 
-  Math.floor(Math.random() * canvasW) + 1, 
-  Math.floor(Math.random() * canvasH) + 1
+  userX, 
+  userY
 );
 
 players.push(user);
@@ -164,7 +173,7 @@ function setup() {
 }
 
 
-// handling keypresses
+// change user position based on keypresses
 function move(user) {
   if (keyIsDown(LEFT_ARROW)) {
     user.x -= speedX;  
@@ -238,10 +247,9 @@ function inFront(p1, p2){
 function draw() {
   background(220);
 
-  // move user's player 
-  move(user);
-  
   if (ws.readyState == 1) {
+    // move user's player 
+    move(user);
     // send position via websockets
     sendPos(user);
   }
