@@ -9,8 +9,9 @@
     <script src="thingy.js"></script>
   </head>
   <body>
-    <h1>Welcome to The Box World!</h3>
+    <h1 id="header">Welcome to The Box World!</h3>
     <script>
+      document.getElementById('header').innerText = "Welcome to The Box World, " + playerName + "!";
       console.log("wow, you've reached the room page, congrats");
     </script>
   </body>
