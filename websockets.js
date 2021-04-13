@@ -91,13 +91,25 @@ wss.on("connection",
 // send room state to all clients every [interval] milliseconds
 var interval1 = 0;
 setInterval(() => {
+  let player_list_to_send = [];
+
+  players.forEach(p => {
+    let player_to_send = {    
+        name: p['name'],
+        color: p['color'],
+        x: p['x'],
+        y: p['y'],
+      }
+    player_list_to_send.push(player_to_send);
+  });
+
   wss.clients.forEach(client => {
     if (client.readyState === WebSocket.OPEN) {
       // building JSON
       let roomState = JSON.stringify(
         {
           status: 'room_update',
-          player_list: players
+          player_list: player_list_to_send
         }
       );
       // send JSON
