@@ -253,7 +253,8 @@ function inFront(p1, p2){
 function draw() {
   background(220);
 
-  while (ws.readyState != 1) {}
+  while (ws.readyState != 1) {console.log(ws.readyState)}
+  console.log("Connected?" + ws.readyState)
 
   // move user's player 
   move(user);
