@@ -20,7 +20,7 @@ wss.on("connection",
       // trigerred on every new login event
       if (dataStatus == "login") {
         
-        // get new player name and color
+        // get new player data
         let newPlayerName = dataJson['name'];
         let newPlayerColor = dataJson['color'];
         let newPlayerX = dataJson['x'];
