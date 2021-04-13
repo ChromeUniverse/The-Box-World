@@ -169,6 +169,8 @@ let user = new Player(
   Math.floor(Math.random() * canvasH) + 1
 );
 
+players.push(user);
+
 
 // Main setup function
 function setup() {
@@ -253,14 +255,13 @@ function inFront(p1, p2){
 function draw() {
   background(220);
 
-  while (ws.readyState != 1) {console.log(ws.readyState)}
-  console.log("Connected?" + ws.readyState)
-
   // move user's player 
   move(user);
-
-  // send position via websockets
-  sendPos(user);
+  
+  if (ws.readyState == 1) {
+    // send position via websockets
+    sendPos(user);
+  }
 
   // layering
   players.sort(inFront);
