@@ -81,7 +81,7 @@ wss.on("connection",
 		});
 
     // send room state to all clients every [interval] milliseconds
-    var interval1 = 0;
+    var interval1 = 1;
     setInterval(() => {
       wss.clients.forEach(client => {
         if (client.readyState === WebSocket.OPEN) {
