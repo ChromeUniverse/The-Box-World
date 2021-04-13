@@ -80,57 +80,6 @@ wss.on("connection",
 
 		});
 
-    // send room state to all clients every [interval] milliseconds
-    var interval1 = 1;
-    setInterval(() => {
-      wss.clients.forEach(client => {
-        if (client.readyState === WebSocket.OPEN) {
-          // building JSON
-          let roomState = JSON.stringify(
-            {
-              status: 'room_update',
-              player_list: players
-            }
-          );
-          // send JSON
-          client.send(roomState);
-        }
-      });
-    }, interval1);
-
-
-
-
-    // check for inactive clients and remove them from player list
-    let interval2 = 1000;
-    setInterval(() => {
-      // creating copy of players list
-      var players_copy = []; 
-
-      // check every player for last active time
-      for (let i = 0; i < players.length; i++) {
-        let p = players[i];
-
-        // current time in seconds
-        let time_now = Math.round(Date.now() / 1000);
-        let last_active_time = p['time'];
-        let timeout = 2;
-
-        // skip over timed out players
-        if (time_now - last_active_time >= timeout) {
-          console.log("User '" + p['name'] + "' has timed out!");
-          continue;
-        } 
-
-        // add active players to copy of player list
-        players_copy.push(p);
-      }
-      
-      // update players list
-      players = players_copy;
-    }, interval2);
-    
-
 		// When the WS is closed
 		ws.on("close", () => {
 			// Print confirmation to console
@@ -138,3 +87,53 @@ wss.on("connection",
 		});
 	}
 );
+
+// send room state to all clients every [interval] milliseconds
+var interval1 = 1;
+setInterval(() => {
+  wss.clients.forEach(client => {
+    if (client.readyState === WebSocket.OPEN) {
+      // building JSON
+      let roomState = JSON.stringify(
+        {
+          status: 'room_update',
+          player_list: players
+        }
+      );
+      // send JSON
+      client.send(roomState);
+    }
+  });
+}, interval1);
+
+
+
+
+// check for inactive clients and remove them from player list
+let interval2 = 1000;
+setInterval(() => {
+  // creating copy of players list
+  var players_copy = []; 
+
+  // check every player for last active time
+  for (let i = 0; i < players.length; i++) {
+    let p = players[i];
+
+    // current time in seconds
+    let time_now = Math.round(Date.now() / 1000);
+    let last_active_time = p['time'];
+    let timeout = 2;
+
+    // skip over timed out players
+    if (time_now - last_active_time >= timeout) {
+      console.log("User '" + p['name'] + "' has timed out!");
+      continue;
+    } 
+
+    // add active players to copy of player list
+    players_copy.push(p);
+  }
+  
+  // update players list
+  players = players_copy;
+}, interval2);
