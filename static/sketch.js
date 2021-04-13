@@ -16,12 +16,25 @@ const thingyH = 40;
 var x = canvasW/2;
 var y = canvasH/2;
 
-// speed
+// player speed
 var speedX = 5;
 var speedY = 5;
 
 // color palette
-const palette = ["#F18F01", "#048BA8", "#2E4057", "#99C24D", "#2F2D2E", "#19535F", "#0B7A75", "#D7C9AA", "#7B2D26", "#BFCDE0", "#729B79", "#59D2FE"];
+const palette = [
+  "#F18F01", 
+  "#048BA8", 
+  "#2E4057", 
+  "#99C24D", 
+  "#2F2D2E", 
+  "#19535F", 
+  "#0B7A75", 
+  "#D7C9AA", 
+  "#7B2D26", 
+  "#BFCDE0", 
+  "#729B79", 
+  "#59D2FE"
+];
 
 
 /*
@@ -86,44 +99,16 @@ ws.addEventListener("open", () => {
 
 // data received from server
 ws.addEventListener("message", msg => {
-  //console.log("Got: ", msg.data);
   var dataJson = JSON.parse(msg.data);
   var dataStatus = dataJson['status'];
-  
-
-  // add new player to room
-  if (dataStatus == 'new_player'){
-    //console.log('Got a new player!');
-    var newPlayerName = dataJson['name'];
-    var newPlayerColor = dataJson['color'];
-    var newPlayerX = dataJson['x'];
-    var newPlayerY = dataJson['y'];
-    
-    //new Player(newPlayerName, newPlayerX, newPlayerY));
-    //let newPlayerEntry = [newPlayerName, newPlayerX, newPlayerY];
-    //players.push(newPlayerEntry);
-    players.push(new Player(newPlayerName, newPlayerColor, newPlayerX, newPlayerY));
-  }
 
   // update room state
   if (dataStatus == 'room_update'){
-    /*
-    players.forEach(p => {
-      for (var i = 0; i < dataJson['player_list'].length; i++) {
-        var playerJson = dataJson['player_list'][i];
-        if ( p.name == playerJson['name'] ) {
-          p.x = playerJson['x'];
-          p.y = playerJson['y'];
-        }
-      } 
-    });
-    */
     var players_copy = [];
     dataJson['player_list'].forEach(p => {
       newPlayer = new Player(p['name'], p['color'], p['x'], p['y']);
       players_copy.push(newPlayer);
-      players = players_copy;
-      
+      players = players_copy;      
     });
   }
 });
@@ -144,6 +129,8 @@ ws.addEventListener("message", msg => {
 // list of players
 let players = [];
 
+
+// set random spawn position within canvas borders
 let minX = thingyW;
 let maxX = canvasW-thingyW;
 
@@ -166,6 +153,7 @@ players.push(user);
 
 // Main setup function
 function setup() {
+  // set up canvas
   createCanvas(canvasW, canvasH);
 
   // ping the server every second or so
@@ -203,7 +191,7 @@ function move(user) {
 
 
 
-// sends current position to websockets server
+// sends current position 
 function sendPos(user) {
   ws.send(
     JSON.stringify(
@@ -218,6 +206,7 @@ function sendPos(user) {
   );
 }
 
+// websockets server ping
 function ping(){
   ws.send(
     JSON.stringify(
@@ -247,6 +236,7 @@ function inFront(p1, p2){
 function draw() {
   background(220);
 
+  // only run with websocket is open
   if (ws.readyState == 1) {
     // move user's player 
     move(user);
