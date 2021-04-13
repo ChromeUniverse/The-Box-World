@@ -20,23 +20,6 @@ var y = canvasH/2;
 var speedX = 5;
 var speedY = 5;
 
-// color palette
-const palette = [
-  "#F18F01", 
-  "#048BA8", 
-  "#2E4057", 
-  "#99C24D", 
-  "#2F2D2E", 
-  "#19535F", 
-  "#0B7A75", 
-  "#D7C9AA", 
-  "#7B2D26", 
-  "#BFCDE0", 
-  "#729B79", 
-  "#59D2FE"
-];
-
-
 /*
 
 **************** Player Class ****************
@@ -129,7 +112,6 @@ ws.addEventListener("message", msg => {
 // list of players
 let players = [];
 
-
 // set random spawn position within canvas borders
 let minX = thingyW;
 let maxX = canvasW-thingyW;
@@ -140,15 +122,10 @@ let maxY = canvasH-thingyH;
 let userX = Math.floor(Math.random() * (maxX-minX) ) + minX;
 let userY = Math.floor(Math.random() * (maxY-minY) ) + minY;
 
-// represents the actual user
-let user = new Player(
-  playerName, 
-  playerColor, 
-  userX, 
-  userY
-);
-
+// create the user
+let user = new Player(playerName, playerColor, userX, userY);
 players.push(user);
+
 
 
 // Main setup function
@@ -157,8 +134,10 @@ function setup() {
   createCanvas(canvasW, canvasH);
 
   // ping the server every second or so
-  setInterval(() => { ping();}, 1000);
+  let pingInterval = 1000;
+  setInterval(() => { ping();}, pingInterval);
 }
+
 
 
 // change user position based on keypresses
@@ -206,6 +185,7 @@ function sendPos(user) {
   );
 }
 
+
 // websockets server ping
 function ping(){
   ws.send(
@@ -217,6 +197,7 @@ function ping(){
     )
   );
 }
+
 
 // player layering
 function inFront(p1, p2){
