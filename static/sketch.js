@@ -1,6 +1,6 @@
 /*
 
-**************** General Variables ****************
+**************** Constant Variables ****************
 
 */
 
@@ -12,13 +12,9 @@ const canvasH = 450;
 const thingyW = 40;
 const thingyH = 40;
 
-// initial position
-var x = canvasW/2;
-var y = canvasH/2;
-
 // player speed
-var speedX = 5;
-var speedY = 5;
+const speedX = 5;
+const speedY = 5;
 
 /*
 
@@ -52,6 +48,34 @@ class Player{
 }
 
 
+/*
+
+**************** User Setup ****************
+
+*/
+
+
+
+// list of players
+let players = [];
+
+// set random spawn position within canvas borders
+let minX = thingyW;
+let maxX = canvasW-thingyW;
+
+let minY = thingyH;
+let maxY = canvasH-thingyH;
+
+let userX = Math.floor(Math.random() * (maxX-minX) ) + minX;
+let userY = Math.floor(Math.random() * (maxY-minY) ) + minY;
+
+// create the user
+let user = new Player(playerName, playerColor, userX, userY);
+players.push(user);
+
+
+
+
 
 /*
 
@@ -74,6 +98,8 @@ ws.addEventListener("open", () => {
         status: 'login',
         name: playerName,
         color: playerColor,
+        x: userX,
+        y: userY
       }
     )
   );
@@ -104,39 +130,10 @@ ws.addEventListener("message", msg => {
 
 /*
 
-**************** Program Setup ****************
+**************** Important Functions ****************
 
 */
 
-
-// list of players
-let players = [];
-
-// set random spawn position within canvas borders
-let minX = thingyW;
-let maxX = canvasW-thingyW;
-
-let minY = thingyH;
-let maxY = canvasH-thingyH;
-
-let userX = Math.floor(Math.random() * (maxX-minX) ) + minX;
-let userY = Math.floor(Math.random() * (maxY-minY) ) + minY;
-
-// create the user
-let user = new Player(playerName, playerColor, userX, userY);
-players.push(user);
-
-
-
-// Main setup function
-function setup() {
-  // set up canvas
-  createCanvas(canvasW, canvasH);
-
-  // ping the server every second or so
-  let pingInterval = 1000;
-  setInterval(() => { ping();}, pingInterval);
-}
 
 
 
@@ -217,10 +214,19 @@ function inFront(p1, p2){
 
 /*
 
-**************** Draw Function ****************
+**************** Main Program ****************
 
 */
 
+// Main setup function
+function setup() {
+  // set up canvas
+  createCanvas(canvasW, canvasH);
+
+  // ping the server every second or so
+  let pingInterval = 1000;
+  setInterval(() => { ping();}, pingInterval);
+}
 
 function draw() {
   background(220);
