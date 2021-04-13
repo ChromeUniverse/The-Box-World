@@ -25,6 +25,8 @@ wss.on("connection",
         let newPlayerColor = dataJson['color'];
         let newPlayerX = dataJson['x'];
         let newPlayerY = dataJson['y'];
+        let newPlayerTime = Math.round(Date.now() / 1000) // UNIX epoch timestamp
+
         console.log("\nNew user connected:" + newPlayerName);
 
         // add new player to player list
@@ -32,43 +34,35 @@ wss.on("connection",
           name: newPlayerName,
           color: newPlayerColor,
           x: newPlayerX,
-          y: newPlayerY,
+          y: newPlayerY,          
+          time: newPlayerTime  // player's last active time
         }
         players.push(newPlayerEntry);
         console.log(players);
-
-        /*
-        // Resend login event to all connected clients
-        wss.clients.forEach(client => {
-          if (client.readyState === WebSocket.OPEN) {
-            // building JSON
-            let newPlayerData = JSON.stringify(
-              {
-                type: 'new_player',
-                name: newPlayerName,
-                color: newPlayerColor,
-                x: 100,
-                y: 100
-              }
-            );
-            // send JSON
-            client.send(newPlayerData);
-          }
-        });
-        */
       }
-
-      // triggered on every new move event
+      
+      
+      
+      // triggered on every new 'move' event
       if (dataStatus == "move") {
         wss.clients.forEach(client => {
-          if (client.readyState === WebSocket.OPEN) {
-            // updating players list
-            players.forEach(p => {
+          if (client.readyState === WebSocket.OPEN) {          
+
+            // find who sent the 'move' update
+            for (let i = 0; i < players.length; i++) {
+              let p = players[i];
+              // found the player who sent the 'move' event        
               if (p['name'] == dataJson['name']){
+                   
+                // update player coordinates 
                 p['x'] = dataJson['x'];
                 p['y'] = dataJson['y'];
+        
+                break;
               }
-            })
+            }
+
+          
 
             // building JSON
             let roomState = JSON.stringify(
@@ -82,7 +76,46 @@ wss.on("connection",
           }
         });
       }
-      
+
+
+
+      // trigdered on every new 'ping' evert
+      if (dataStatus == 'ping') {
+
+        // find the pinger
+        for (let i = 0; i < players.length; i++) {
+          // found the pinger 
+          if (players[i]['name'] == dataJson['name']){
+            // update player's last active time
+            let time_now = Math.round(Date.now() / 1000); 
+            players[i]['time'] = time_now;
+            break;
+          }
+        }
+
+        // creating copy of players list
+        var players_copy = []; 
+
+        // check every player for last active time
+        for (let i = 0; i < players.length; i++) {
+          let p = players[i];
+
+          let time_now = Math.round(Date.now() / 1000);
+          let last_active_time = p['time'];
+          let timeout = 2;
+
+          // skip over timed out player
+          if (time_now - last_active_time >= timeout) {
+            console.log("User '" + p['name'] + "' has timed out!");
+            continue;
+          } 
+
+          players_copy.push(p);
+        }
+        
+        // update players list
+        players = players_copy;
+      }
 
 		});
 

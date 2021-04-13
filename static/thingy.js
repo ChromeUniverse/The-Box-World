@@ -183,7 +183,7 @@ function setup() {
 
 
 // handling keypresses
-function keys(user) {
+function move(user) {
   if (keyIsDown(LEFT_ARROW)) {
     user.x -= speedX;  
     if (user.x < thingyW/2) {
@@ -227,6 +227,17 @@ function sendPos(user) {
   );
 }
 
+function ping(){
+  ws.send(
+    JSON.stringify(
+      {
+        status: 'ping',
+        name: user.name
+      }
+    )
+  );
+}
+
 // player layering
 function inFront(p1, p2){
   if (p1.y > p2.y)  return 1
@@ -246,7 +257,13 @@ function draw() {
   console.log("here is players: " + players)
   background(220);
 
-  keys(user);
+  // ping the server
+  ping();
+
+  // move user's player 
+  move(user);
+
+  // send position via websockets
   sendPos(user);
 
   // layering
