@@ -16,6 +16,11 @@ const thingyH = 40;
 const speedX = 5;
 const speedY = 5;
 
+// websockets server
+const server = 'localhost';
+// const server = '34.200.98.64';
+
+
 /*
 
 **************** Player Class ****************
@@ -85,7 +90,7 @@ players.push(user);
 
 
 // new websocket connection
-const ws = new WebSocket("ws://34.200.98.64:2848");
+const ws = new WebSocket('ws://' + server + ':2848');
 
 // on connection
 ws.addEventListener("open", () => {
@@ -175,7 +180,7 @@ function move(user) {
 
 // sends current position 
 function sendPos(user) {
-  if (move()) {
+  if (move(user)) {
     ws.send(
       JSON.stringify(
         {

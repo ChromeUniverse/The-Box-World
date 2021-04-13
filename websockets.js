@@ -68,7 +68,8 @@ wss.on("connection",
         // find the pinger
         for (let i = 0; i < players.length; i++) {
           // found the pinger 
-          if (players[i]['name'] == dataJson['name']){          
+          if (players[i]['name'] == dataJson['name']){ 
+            console.log(players[i]['name'] + ' pinged!');         
             // current time in seconds
             let time_now = Math.round(Date.now() / 1000); 
             // update player's last active time
