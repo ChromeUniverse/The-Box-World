@@ -114,7 +114,7 @@ wss.on("connection",
         // current time in seconds
         let time_now = Math.round(Date.now() / 1000);
         let last_active_time = p['time'];
-        let timeout = 3;
+        let timeout = 1;
 
         // skip over timed out players
         if (time_now - last_active_time >= timeout) {
