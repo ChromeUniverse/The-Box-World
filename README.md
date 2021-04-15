@@ -21,7 +21,7 @@ This is full-stack JavaScript web application.
   * Minimal HTML for the landing page and room page with p5.js canvas 
   * No stylesheets/CSS yet
 
-## Websockets message exchange scheme
+## Websockets message exchange model
 
 ### Client -> Server
 
@@ -60,13 +60,13 @@ _Coming soon_
 ## Todo
 
 * High priority
-  * Improve message exchange scheme
+  * Improve message exchange model
 
 * Important
 
   * Add message/chat functionality
-  * Check for two users with the same name
   * Add multiple rooms functionality
+  * Check for two users with the same name
   * Make a half decent UI with some ✨fancy CSS ✨
 
 * Not so high priority
