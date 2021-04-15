@@ -24,14 +24,19 @@ const palette = [
   "#59D2FE", // Maya Blue
 ];
 
-// "Redirecting" GET requests to '/room' to '/'
-app.get('/room', (req, res) => {
-  res.status(405);
+// "Redirecting" GET requests to '/'
+app.get('/', (req, res) => {
+  res.status(200);
   res.sendFile(__dirname + '/static/index.html');
 })
 
-// POST request to /room
-app.post('/room', (req, res) => {
+app.get('/plop', (req, res) => {
+  res.status(200);
+  res.sendFile(__dirname + '/static/plop.mp3');
+});
+
+// POST request to /
+app.post('/', (req, res) => {
   // parsing form data
   let formData = req.body;
   let username = formData['username'];
