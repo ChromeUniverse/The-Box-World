@@ -5,42 +5,77 @@
   type: login,
   name: Lucca,
   color: "#ABCDEF"
+  x: 100,
+  y: 100
 }
 
 // player movement
 { 
   type: move,
+  id: 123456,
   name: Lucca,
-  key_presses: {
-    'up': true,
-    'down': false,
-    'left': true,
-    'right': false
-  }
+  x: 100,
+  y: 200
 }
+
+// send chat
+{
+  type: up_chat,
+  id: 123456,
+  name: Lucca,
+  message: "Hello World!"
+}
+
+
+
+
+
 
 *** server -> client ***
 
-// room_update
-
+// send unique ID to newly logged in user
 {
-  type: room_update,
-  player_list: [
+  type: set-id,
+  id: 123456
+}
+
+// new player logged in 
+{
+  type: new-player,
+  id: 123456,
+  name: "Lucca",
+  x: 100,
+  y: 200
+}
+
+
+// update room state
+{
+  type: room-update,
+  room-state: [
     {
+      id: 123456,
       name: Lucca,
-      position: pos
+      x: 100,
+      y: 200
     },
     {
+      id: 123456,
       name: qrno,
-      postion: pos
+      x: 100,
+      y: 200      
     },
     {
+      id: 123456,
       name: Vilsu,
-      position: pos
+      x: 100,
+      y: 200
     },
     {
+      id: 123456,
       name: Tyuk3,
-      position: pos
+      x: 100,
+      y: 200
     }
   ]
 }
@@ -67,24 +102,9 @@
   ]
 }
 
-// new player
+// received chat 
 {
-  type: new_player,
-  name: Lucca
-}
-
-// remove player
-{
-  type: remove_player,
-  name: Lucca
-}
-
-// player text message
-
-{
-  type: text_message,
-  message: {
-    name: Vilsu,
-    content: "bora no sync tube ver video essay sobre cinematografia em anime, é muito bom uwu"
-  }
+  type: down_chat,
+  name: "qrno"
+  message: "i like the end of evangelion *and* I'm a closeted weeaboo"
 }
