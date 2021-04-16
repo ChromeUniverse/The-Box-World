@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "forever": "^3.0.4",
     "ws": "^7.4.4"
   }
 }
