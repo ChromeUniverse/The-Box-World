@@ -199,7 +199,7 @@ function room_to_send() {
 
 
 // send room state to all clients every [interval] milliseconds
-var interval1 = 5;
+var interval1 = 10;
 setInterval(() => {
 
   let sending = room_to_send();
