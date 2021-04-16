@@ -12,11 +12,11 @@
   <body>
     <h1 id="header">Welcome to The Box World!</h3>
     <script>
-      document.getElementById('header').innerText = "Welcome to The Box World, " + playerName + "!";
+      document.getElementById('header').innerText = "Welcome to The Box World, " + userName + "!";
       console.log("wow, you've reached the room page, congrats");
     </script>
-    <input type="text" id="msg_field">
-    <button onclick="sendMsg()">Send message</button>
+    <input type="text" id="chat">
+    <button onclick="sendChat()">Send message</button>
     <div id='canvas'></div>
   </body>
 </html>
