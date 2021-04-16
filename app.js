@@ -11,11 +11,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // color palette
 const palette = [
   "#F18F01", // Tangerine
-  "#048BA8", // Eastern Blue
   "#2E4057", // Madison
   "#99C24D", // Atlantis Green
-  "#2F2D2E", // Toledo
-  "#19535F", // Dark Teal Blue
+  "#2F2D2E", // Toledo  
   "#0B7A75", // Surfie Green
   "#D7C9AA", // Aths Special
   "#7B2D26", // Lusty
