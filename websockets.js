@@ -104,10 +104,13 @@ wss.on("connection",
       // triggered on every new 'move' event
       if (dataType == "move") {                    
         // find who sent the 'move' update        
-        let ID = dataJson['id'];
-        let p = players[ID];
-        p['x'] = dataJson['x'];
-        p['y'] = dataJson['y'];
+        let ID = dataJson['id'];        
+
+        if (players.hasOwnProperty(ID)) {
+          let p = players[ID];
+          p['x'] = dataJson['x'];
+          p['y'] = dataJson['y'];        
+        }
              
       }
 
@@ -136,8 +139,10 @@ wss.on("connection",
         let message_text = '';
 
         // find the sender
-        let sender_id = dataJson['id'];      
-        let p = players[sender_id]; 
+        let sender_id = dataJson['id']; 
+        
+        if (players.hasOwnProperty(sender_id)) {
+          let p = players[sender_id]; 
       
 
         // fill buffers
@@ -161,8 +166,8 @@ wss.on("connection",
             client.send(message);
           }
         });
+        }              
       }
-
 		});
 
 		// When the WS is closed
