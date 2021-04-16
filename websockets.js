@@ -253,7 +253,7 @@ setInterval(() => {
   Object.values(players_copy).forEach(p => {
 
     // timeout invertal (measured in seconds)
-    let timeout = 2;
+    let timeout = 5;
 
     // compare time now and last active time
     let time_now = Math.round(Date.now() / 1000);
