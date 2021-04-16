@@ -5,8 +5,8 @@
 */
 
 // canvas properties
-const canvasW = 600; 
-const canvasH = 450;
+const canvasW = 930; 
+const canvasH = 530;
 
 // thingy dimensions
 const thingyW = 40;
@@ -44,12 +44,21 @@ class Player{
 
   // renders the player on the canvas
   display() {
+    
+    // highlight user with a thin white border
+    if (this.name == userName) {
+      strokeWeight(3);
+      stroke('rgb(38, 38, 61)');
+    } else {
+      noStroke();
+    }
+    
     // draw thingy
-    noStroke();
     fill(this.col);
     rectMode(CENTER);
     rect(this.x, this.y, thingyW, thingyH, 12, 12);
 
+    noStroke();
     // show player name 
     textSize(20);
     fill(color(255));
@@ -221,17 +230,60 @@ ws.addEventListener("message", msg => {
   }
 
   if (dataType == 'down-chat') {      
+    // parse out message
     let senderID = dataJson['id'];    
     let sender = players[senderID];     
 
     let message_text = dataJson['message'];
     console.log(sender.name + ' sent a message: "' + message_text + '"');
 
+    // updating sender attributes
     sender.has_msg = true;
     sender.msg_text = dataJson['message'];
     sender.msg_time = Math.round(Date.now()/1000)
 
-  }
+    // adding message to room chat    
+
+    // create new message in DOM and add it to chat        
+
+    // new message on the DOM looks like:
+    // <p>
+    //  <b class="e28bf531740a" style="color: rgb(153, 194, 77);">Lucca</b>: eo
+    // </p>
+
+    // create parent paragraph tag
+    let new_message = document.createElement("p");
+
+    // create internal bold tag for sender name
+    let new_message_sender = document.createElement("b")
+    // adding sender ID as class name
+    new_message_sender.className = senderID;
+
+    // creating sender's name
+    let new_message_sender_name = document.createTextNode(sender.name);
+    // adding sender name to sender
+    new_message_sender.appendChild(new_message_sender_name);
+
+    // adding sender to message
+    new_message.appendChild(new_message_sender);
+
+    // creating message text
+    let new_message_text = document.createTextNode(': ' + message_text);
+    // adding message text to actual message
+    new_message.appendChild(new_message_text);
+
+    // getting chat div
+    let chat = document.getElementById("room-chat");
+    // adding new message to chat div
+    chat.appendChild(new_message);
+
+    // looping over messages sent by current sender
+    var x = document.getElementsByClassName(senderID);
+    // styling: sender name (already in bold) gets sender color
+    for (let i = 0; i < x.length; i++) {
+      x[i].style.color = sender.col;
+    }
+}
 
   if (dataType == 'delete-player') {
 
@@ -288,14 +340,7 @@ function send_login() {
 // send chat message to WS server
 function sendChat() {
   // get message text
-  let message = document.getElementById('chat').value;
-  
-  // update user attibutes
-  /*
-  user.has_msg = true;
-  user.msg_text = message;
-  user.msg_time = Math.round(Date.now() / 1000);  
-  */
+  let message = document.getElementById('send-message').value;
 
   // send message over websockets
   ws.send(

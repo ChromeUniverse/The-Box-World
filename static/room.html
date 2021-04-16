@@ -1,7 +1,11 @@
 <html>
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/addons/p5.sound.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js"></script>    
     <title>The Box World</title>
     <script>
       let userName = 'USERNAME';
@@ -9,14 +13,31 @@
     </script>
     <script src="client.js"></script>
   </head>
-  <body>
-    <h1 id="header">Welcome to The Box World!</h3>
-    <script>
-      document.getElementById('header').innerText = "Welcome to The Box World, " + userName + "!";
-      console.log("wow, you've reached the room page, congrats");
-    </script>
-    <input type="text" id="chat">
-    <button onclick="sendChat()">Send message</button>
-    <div id='canvas'></div>
+  <body class="body">
+    <h1 id="header">The Box World</h1>
+
+    <main id='boxes'>
+      <div class='space1'></div>
+      <div class='canvas' id='canvas'></div>
+      <div class='space2'></div>
+      <div class='chat'>
+
+        <div class='chat-header'>
+          <b>ROOM CHAT</b>          
+        </div> 
+
+        <div class='messages' id='room-chat'> </div>
+
+        <div class="chat-bottom">
+          <input class="input" type="text" name="" id="send-message">
+          <button class="send" id="send-button" onclick="sendChat()">Send</button>
+        </div>
+        
+      </div>
+
+    </main>
+
+   
+    
   </body>
 </html>
