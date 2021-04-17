@@ -18,7 +18,7 @@ This is full-stack JavaScript web application.
 
 * **Frontend**
   * [p5.js](https://p5js.org/) for graphics
-  * Minimal HTML for the landing page and room page with p5.js canvas 
+  * Minimal HTML for the main page and room page with p5.js canvas 
   * No stylesheets/CSS yet
 
 ## Websockets message exchange model
@@ -56,28 +56,35 @@ _Coming soon_
 
 * Functional multiplayer
 * Periodic server pinging and player timeout
+* Working chat with message bubble
+* Two players can now have the same name
+* Users automatically time out and and are removed from the room after 5 seconds of inactivity
+* Main page has some ✨fancy CSS✨ styling
 
 ## Todo
 
 * High priority
-  * Improve message exchange model
+  * Improve message exchange model 
+  * Implement full server-side room state processing 
+  * Add actual fun features (games, video watch-along, something idk)
 
-* Important
-
-  * Add message/chat functionality
-  * Add multiple rooms functionality
-  * Check for two users with the same name
-  * Make a half decent UI with some ✨fancy CSS ✨
+* Important  
+  * Add multiple room functionality 
+    * Add most popular room preview/spectation on main page
+  * Add chat auto-scroll (when receiving new messages)
+    * Needs well-described behavior to make a dead-simple UI/UX
+    * **e.g.:** no auto-scrolling when reading previous/old messages, only scroll when at the bottom and receiving new messages
+  * Make a half decent UI with some ✨fancy CSS✨ for the main page
 
 * Not so high priority
-
   * Add 'Leave' button
-  * Change server-side script daemon package (maybe [pm2](https://pm2.keymetrics.io/) or [nodemon](https://nodemon.io/))
+  * Change server-side script daemon-izing package (maybe [pm2](https://pm2.keymetrics.io/) or [nodemon](https://nodemon.io/))
 
 * Far out ideas
-
   * Add WebRTC-based voice chat
  
 ## Gallery
 
-![here](https://media.discordapp.net/attachments/760252264723644426/831382969770967110/unknown.png?width=650&height=550)
+### Room view
+
+![here](https://media.discordapp.net/attachments/760252264723644426/832846019070394428/unknown.png?width=800&height=400)
