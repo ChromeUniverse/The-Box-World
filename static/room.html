@@ -1,4 +1,5 @@
 <html>
+  
   <head>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -13,27 +14,38 @@
     </script>
     <script src="client.js"></script>
   </head>
+
   <body class="body">
     <h1 id="header">The Box World</h1>
 
-    <main id='boxes'>
-      <div class='space1'></div>
-      <div class='canvas' id='canvas'></div>
-      <div class='space2'></div>
-      <div class='chat'>
+    <main id='boxes'>      
 
-        <div class='chat-header'>
-          <b>ROOM CHAT</b>          
-        </div> 
+      <div class='stuffs'>
 
-        <div class='messages' id='room-chat'> </div>
+        <div class="more-stuffs">
 
-        <div class="chat-bottom">
-          <input class="input" type="text" name="" id="send-message">
-          <button class="send" id="send-button" onclick="sendChat()">Send</button>
+          <div class='canvas' id='canvas'></div>
+    
+          <div class='chat'>
+
+            <div class='chat-header'>
+              <b>ROOM CHAT</b>          
+            </div> 
+
+            <div class='messages' id='room-chat'> </div>
+
+            <div class="chat-bottom">
+              <input class="msg-input" type="text" name="message" id="send-message" placeholder="Send a message">
+              <button class="send" id="send-button" onclick="sendChat()">Send</button>
+            </div>
+            
+          </div>
+
         </div>
-        
+
       </div>
+
+      
 
     </main>
 
