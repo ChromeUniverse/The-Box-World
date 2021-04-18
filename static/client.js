@@ -17,8 +17,8 @@ const speedX = 5;
 const speedY = 5;
 
 // websockets server
-// const server = 'localhost';
-const server = '34.200.98.64';
+const server = 'localhost';
+// const server = '34.200.98.64';
 
 // local list of players
 let players = {};
@@ -343,8 +343,9 @@ ws.addEventListener("message", msg => {
     Object.values(players).forEach(p => {
 
       if (p.id === removedID) {        
+        removed_name = p['name'];
         // skip over removed played
-        console.log('Player ' + p['name'] + ' has left the room. ');
+        console.log('Player ' + removed_name + ' has left the room. ');
         
         // Show a special message on chat
         // format:
@@ -356,7 +357,7 @@ ws.addEventListener("message", msg => {
         // setting class name
         alert_message.className = "alert";
 
-        let alert_message_text = document.createTextNode(newPlayer_name + ' has left the room.');
+        let alert_message_text = document.createTextNode(removed_name + ' has left the room.');
         
         // add message text to message
         alert_message.appendChild(alert_message_text);
