@@ -5,7 +5,7 @@
 */
 
 // canvas properties
-const canvasW = 930; 
+const canvasW = 600; 
 const canvasH = 530;
 
 // thingy dimensions
@@ -17,8 +17,8 @@ const speedX = 5;
 const speedY = 5;
 
 // websockets server
-//const server = 'localhost';
-const server = '34.200.98.64';
+const server = 'localhost';
+//const server = '34.200.98.64';
 
 // local list of players
 let players = {};
@@ -46,7 +46,7 @@ class Player{
   display() {
     
     // highlight user with a thin white border
-    if (this.name == userName) {
+    if (this.id == user.id) {
       strokeWeight(3);
       stroke('rgb(38, 38, 61)');
     } else {
@@ -225,7 +225,38 @@ ws.addEventListener("message", msg => {
     if (newPlayer_ID != user.id) {
       newPlayer = new Player(newPlayer_ID, newPlayer_name, newPlayer_color, newPlayer_X, newPlayer_Y);      
       players[newPlayer_ID] = newPlayer;
-    }
+
+      console.log('Player ' + newPlayer_name + ' has left the room. ');
+
+      // Show a special message on chat
+      // format:
+      //   <p><i style="color: rgb(158, 158, 158);" class="alert">Lucca has joined the room.</i></p>
+      // 
+      let alert = document.createElement('p');
+
+      let alert_message = document.createElement('i');
+      // setting class name
+      alert_message.className = "alert";
+
+      let alert_message_text = document.createTextNode(newPlayer_name + ' has joined the room.');
+      
+      // add message text to message
+      alert_message.appendChild(alert_message_text);
+      // add message to alert
+      alert.appendChild(alert_message);
+
+      // getting chat div
+      let chat = document.getElementById("room-chat");
+      // adding new message to chat div
+      chat.appendChild(alert);
+
+      // looping over messages sent by current sender
+      var x = document.getElementsByClassName('alert');
+      // styling: sender name (already in bold) gets sender color
+      for (let i = 0; i < x.length; i++) {
+        x[i].style.color = "rgb(158, 158, 158)";
+      }
+    }    
     
   }
 
@@ -243,6 +274,18 @@ ws.addEventListener("message", msg => {
     sender.msg_time = Math.round(Date.now()/1000)
 
     // adding message to room chat    
+
+
+    let room_chat = document.getElementById("room-chat");
+    // let scroll_top = room_chat.scrollTop;    
+    // let scroll_height = room_chat.scrollHeight;  
+    
+    function isAtBottom() {                
+      let expression = room_chat.scrollTop + room_chat.clientHeight + 5 > room_chat.scrollHeight;
+      return expression;      
+    }
+
+    let bottom = isAtBottom();
 
     // create new message in DOM and add it to chat        
 
@@ -282,8 +325,12 @@ ws.addEventListener("message", msg => {
     // styling: sender name (already in bold) gets sender color
     for (let i = 0; i < x.length; i++) {
       x[i].style.color = sender.col;
-    }
-}
+    }    
+    
+    if ( bottom ) {      
+      room_chat.scrollTop = room_chat.scrollHeight;
+    } 
+  }
 
   if (dataType == 'delete-player') {
 
@@ -297,11 +344,41 @@ ws.addEventListener("message", msg => {
 
       if (p.id === removedID) {        
         // skip over removed played
-        console.log('Player ' + p['name'] + ' has left the room. ');        
-      } else {
-        // add active players to copy of player list        
-        players_copy[p.id] = p;      
-      }
+        console.log('Player ' + p['name'] + ' has left the room. ');
+        
+        // Show a special message on chat
+        // format:
+        //   <p><i style="color: rgb(158, 158, 158);" class="alert">Lucca has joined the room.</i></p>
+        // 
+        let alert = document.createElement('p');
+
+        let alert_message = document.createElement('i');
+        // setting class name
+        alert_message.className = "alert";
+
+        let alert_message_text = document.createTextNode(newPlayer_name + ' has left the room.');
+        
+        // add message text to message
+        alert_message.appendChild(alert_message_text);
+        // add message to alert
+        alert.appendChild(alert_message);
+
+        // getting chat div
+        let chat = document.getElementById("room-chat");
+        // adding new message to chat div
+        chat.appendChild(alert);
+
+        // looping over messages sent by current sender
+        var x = document.getElementsByClassName('alert');
+        // styling: sender name (already in bold) gets sender color
+        for (let i = 0; i < x.length; i++) {
+          x[i].style.color = "rgb(158, 158, 158)";
+        }
+          
+        } else {
+          // add active players to copy of player list        
+          players_copy[p.id] = p;      
+        }
 
     });
 
@@ -340,19 +417,26 @@ function send_login() {
 // send chat message to WS server
 function sendChat() {
   // get message text
-  let message = document.getElementById('send-message').value;
+  let input = document.getElementById('send-message');
+  let message = input.value;
 
-  // send message over websockets
-  ws.send(
-    JSON.stringify(
-      {
-        type: 'up_chat',
-        id: user.id,
-        name: user.name,
-        message: message,
-      }
-    )
-  );
+  // clear input field
+  input.value = '';
+  
+  // Checking if input is empty
+  if (message.replace(/\s/g, '').length > 0) {
+    // send message over websockets
+    ws.send(
+      JSON.stringify(
+        {
+          type: 'up_chat',
+          id: user.id,
+          name: user.name,
+          message: message,
+        }
+      )
+    );
+  }
 }
 
 // change user position based on keypresses
