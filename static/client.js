@@ -56,7 +56,7 @@ class Player{
     // draw thingy
     fill(this.col);
     rectMode(CENTER);
-    rect(this.x, this.y, thingyW, thingyH, 12, 12);
+    rect(this.x, this.y, thingyW, thingyH, 10, 10);
 
     noStroke();
     // show player name 
