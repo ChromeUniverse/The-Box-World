@@ -18,7 +18,7 @@ This is full-stack JavaScript web application.
 
 * **Frontend**
   * [p5.js](https://p5js.org/) for graphics
-  * Minimal HTML for the main page and room page with p5.js canvas 
+  * Minimal HTML for the home page and room page with p5.js canvas 
   * No stylesheets/CSS yet
 
 ## Websockets message exchange model
@@ -59,7 +59,9 @@ _Coming soon_
 * Working chat with message bubble
 * Two players can now have the same name
 * Users automatically time out and and are removed from the room after 5 seconds of inactivity
-* Main page has some ✨fancy CSS✨ styling
+* Home page has some ✨fancy CSS✨ styling
+* Changed package daemonizer to [PM2](https://pm2.keymetrics.io/)
+* Chat now displays _Player joined the room_ and _Player has left the room_ alert messages
 
 ## Todo
 
@@ -71,14 +73,19 @@ _Coming soon_
 * Important  
   * Add multiple room functionality 
     * Add most popular room preview/spectation on main page
+    * Steal some more code from [django-websockets](https://github.com/qrno/django-websockets)
   * Add chat auto-scroll (when receiving new messages)
     * Needs well-described behavior to make a dead-simple UI/UX
     * **e.g.:** no auto-scrolling when reading previous/old messages, only scroll when at the bottom and receiving new messages
-  * Make a half decent UI with some ✨fancy CSS✨ for the main page
+  * Improve styles
+    * Make a half decent UI with some ✨fancy CSS✨ for the home page
+    * Use some flexbox
+  
 
 * Not so high priority
-  * Add 'Leave' button
-  * Change server-side script daemon-izing package (maybe [pm2](https://pm2.keymetrics.io/) or [nodemon](https://nodemon.io/))
+  * Add buttons for navigation
+    * Change room
+    * Return to home page
 
 * Far out ideas
   * Add WebRTC-based voice chat
