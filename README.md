@@ -61,7 +61,8 @@ _Coming soon_
 * Users automatically time out and and are removed from the room after 5 seconds of inactivity
 * Home page has some ✨fancy CSS✨ styling
 * Changed package daemonizer to [PM2](https://pm2.keymetrics.io/)
-* Chat now displays _Player joined the room_ and _Player has left the room_ alert messages
+* Chat now displays alert messages (e.g.:_Player joined the room_ and _Player has left the room_) 
+* Added chat auto-scroll (when receiving new messages) and improved chat styles
 
 ## Todo
 
@@ -73,14 +74,10 @@ _Coming soon_
 * Important  
   * Add multiple room functionality 
     * Add most popular room preview/spectation on main page
-    * Steal some more code from [django-websockets](https://github.com/qrno/django-websockets)
-  * Add chat auto-scroll (when receiving new messages)
-    * Needs well-described behavior to make a dead-simple UI/UX
-    * **e.g.:** no auto-scrolling when reading previous/old messages, only scroll when at the bottom and receiving new messages
+    * Steal some more code from [django-websockets](https://github.com/qrno/django-websockets)  
   * Improve styles
     * Make a half decent UI with some ✨fancy CSS✨ for the home page
-    * Use some flexbox
-  
+    * Use some flexbox  
 
 * Not so high priority
   * Add buttons for navigation
