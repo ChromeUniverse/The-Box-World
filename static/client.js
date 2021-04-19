@@ -223,6 +223,15 @@ ws.addEventListener("message", msg => {
 
       console.log('Player ' + newPlayer_name + ' has left the room. ');
 
+      let room_chat = document.getElementById("room-chat"); 
+    
+      function isAtBottom(room_chat) {                
+        let expression = room_chat.scrollTop + room_chat.clientHeight + 5 > room_chat.scrollHeight;
+        return expression;      
+      }
+
+      let bottom = isAtBottom(room_chat);
+
       // Show a special message on chat
       // format:
       //   <p><i style="color: rgb(158, 158, 158);" class="alert">Lucca has joined the room.</i></p>
@@ -251,6 +260,10 @@ ws.addEventListener("message", msg => {
       for (let i = 0; i < x.length; i++) {
         x[i].style.color = "rgb(158, 158, 158)";
       }
+
+      if ( bottom ) {      
+        room_chat.scrollTop = room_chat.scrollHeight;
+      } 
     }    
     
   }
@@ -271,16 +284,14 @@ ws.addEventListener("message", msg => {
     // adding message to room chat    
 
 
-    let room_chat = document.getElementById("room-chat");
-    // let scroll_top = room_chat.scrollTop;    
-    // let scroll_height = room_chat.scrollHeight;  
+    let room_chat = document.getElementById("room-chat"); 
     
-    function isAtBottom() {                
+    function isAtBottom(room_chat) {                
       let expression = room_chat.scrollTop + room_chat.clientHeight + 5 > room_chat.scrollHeight;
       return expression;      
     }
 
-    let bottom = isAtBottom();
+    let bottom = isAtBottom(room_chat);
 
     // create new message in DOM and add it to chat        
 
@@ -342,6 +353,16 @@ ws.addEventListener("message", msg => {
         // skip over removed played
         console.log('Player ' + removed_name + ' has left the room. ');
         
+        let room_chat = document.getElementById("room-chat"); 
+    
+        function isAtBottom(room_chat) {                
+          let expression = room_chat.scrollTop + room_chat.clientHeight + 5 > room_chat.scrollHeight;
+          return expression;      
+        }
+
+        let bottom = isAtBottom(room_chat);
+
+
         // Show a special message on chat
         // format:
         //   <p><i style="color: rgb(158, 158, 158);" class="alert">Lucca has joined the room.</i></p>
@@ -375,6 +396,10 @@ ws.addEventListener("message", msg => {
           // add active players to copy of player list        
           players_copy[p.id] = p;      
         }
+
+        if ( bottom ) {      
+          room_chat.scrollTop = room_chat.scrollHeight;
+        } 
 
     });
 
@@ -438,7 +463,7 @@ function sendChat() {
 }
 
 // change user position based on keypresses
-function move() {
+function keys() {
   let moved = false;
   if (keyIsDown(LEFT_ARROW)) {
     moved = true;
@@ -480,7 +505,7 @@ function move() {
 
 // sends current position 
 function sendPos() {
-  if (move(user)) {
+  if (keys(user)) {
     ws.send(
       JSON.stringify(
         {
@@ -496,6 +521,9 @@ function sendPos() {
   }
 }
 
+function autoscroll() {
+  
+}
 
 /*
 
