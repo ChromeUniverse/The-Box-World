@@ -63,6 +63,9 @@ _Coming soon_
 * Changed package daemonizer to [PM2](https://pm2.keymetrics.io/)
 * Chat now displays alert messages (e.g.:_Player joined the room_ and _Player has left the room_) 
 * Added chat auto-scroll (when receiving new messages) and improved chat styles
+* Room page now uses Flexbox-based styling
+* Added simpler (and more efficient/more effective!) player timeout and remove functions
+* Added multiple room functionality
 
 ## Todo
 
@@ -71,13 +74,10 @@ _Coming soon_
   * Implement full server-side room state processing 
   * Add actual fun features (games, video watch-along, something idk)
 
-* Important  
-  * Add multiple room functionality 
-    * Add most popular room preview/spectation on main page
-    * Steal some more code from [django-websockets](https://github.com/qrno/django-websockets)  
+* Important      
   * Improve styles
     * Make a half decent UI with some ✨fancy CSS✨ for the home page
-    * Use some flexbox  
+      
 
 * Not so high priority
   * Add buttons for navigation
