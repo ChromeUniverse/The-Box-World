@@ -71,7 +71,7 @@ wss.on("connection",
         }
 
         // log new player
-        console.log("[ NEW USER ]", [newPlayerID, newPlayerName, newPlayerColor, newPlayerX, newPlayerY, newPlayerTime] + '\n');
+        console.log("[ NEW USER ]", [newPlayerID, newPlayerName, newPlayerColor, newPlayerX, newPlayerY, roomName] + '\n');
 
 
         // creating new room if it doesn't already exist
