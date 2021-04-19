@@ -1,47 +1,63 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js"></script>    
+
+  <script>
+    let userName = 'USERNAME';
+    let userColor = 'COLOR';
+    let roomName = 'ROOM';
+  </script>
+
+  <script src="client.js"></script>
+
+  <title>The Box World</title>
   
-  <head>
+</head>
+<body>
+  <h1 id="header">The Box World</h1>
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <script>
+    let header = document.getElementById('header');
+    header.innerText = roomName;
+  </script>
 
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js"></script>    
-    <title>The Box World</title>
-    <script>
-      let userName = 'USERNAME';
-      let userColor = 'COLOR';
-    </script>
-    <script src="client.js"></script>
-  </head>
+  <main id='boxes'>      
 
-  <body>
-    <h1 id="header">The Box World</h1>
-
-    <main id='boxes'>      
-
-      <div class='stuff'>
-    
-        <div class='canvas' id='canvas'></div>
+    <div class='stuff'>
   
-        <div class='chat'>
+      <div class='canvas' id='canvas'></div>
 
-          <div class='chat-header'>
-            <b>ROOM CHAT</b>          
-          </div> 
+      <div class='chat'>
 
-          <div class='messages' id='room-chat'> </div>
+        <div class='chat-header'>
+          <b>ROOM CHAT</b>          
+        </div> 
 
-          <div class="chat-bottom">
-            <input class="msg-input" type="text" name="message" id="send-message" placeholder="Send a message">
-            <button class="send" id="send-button" onclick="sendChat()">Send</button>
-          </div>
-          
-        </div>        
+        <div class='messages' id='room-chat'> </div>
 
-      </div>
+        <div class="chat-bottom">
+          <input class="msg-input" type="text" name="message" id="send-message" placeholder="Send a message">
+          <button class="send" id="send-button" onclick="sendChat()">Send</button>
+        </div>
+        
+      </div>        
 
-    </main>
-   
-  </body>
+    </div>
+
+  </main>
+  
+</body>
 </html>
+
+
+

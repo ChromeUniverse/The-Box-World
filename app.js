@@ -23,7 +23,7 @@ const palette = [
 // "Redirecting" GET requests to '/'
 app.get('/', (req, res) => {
   res.status(200);
-  res.sendFile(__dirname + '/static/index.html');
+  res.sendFile('index.html');
 })
 
 app.get('/plop', (req, res) => {
@@ -33,19 +33,37 @@ app.get('/plop', (req, res) => {
 
 // POST request to /
 app.post('/', (req, res) => {
+
   // parsing form data
   let formData = req.body;
   let username = formData['username'];
-  console.log("New user:" + username);
+  let room = formData['room'];
+  console.log('New user', username, 'requesting to join room', room);
 
-  // select random color from palette 
-  let playerColor = palette[Math.floor(Math.random() * palette.length)];
+  function isEmpty(u,r) {
+    let name_empty = u.replace(/\s/g, '').length == 0;
+    let room_empty = r.replace(/\s/g, '').length == 0;
 
-  // replacing USERNAME and COLOR with actual player name and random color
-  res.status(200);
-  let data = fs.readFileSync(__dirname + '/static/room.html');
-  res.send(data.toString().replace('USERNAME', username).replace('COLOR', playerColor));
+    if (name_empty) {return true}
+    else if (room_empty) {return true}
+    else {return false}
+  }
 
+  // checking for whitespaces
+  if (!isEmpty(username,room)) {
+
+    // select random color from palette 
+    let playerColor = palette[Math.floor(Math.random() * palette.length)];
+
+    // replacing USERNAME, COLOR, ROOM with actual player name and random color
+    res.status(200);
+    let data = fs.readFileSync(__dirname + '/static/room.html');
+    res.send(data.toString().replace('USERNAME', username).replace('COLOR', playerColor).replace('ROOM', room));
+  
+  } else {
+    res.status(400);  
+    res.sendFile(__dirname + '/static/empty.html');
+  }
 })
 
 // Start server
