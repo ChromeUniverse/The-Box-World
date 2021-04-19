@@ -426,7 +426,7 @@ function sendChat() {
     ws.send(
       JSON.stringify(
         {
-          type: 'up_chat',
+          type: 'up-chat',
           id: user.id,
           name: user.name,
           message: message,

@@ -124,7 +124,7 @@ wss.on("connection",
              
       }      
 
-      if (dataType == 'up_chat') {
+      if (dataType == 'up-chat') {
         // reset buffers
         let sender_name = '';
         let message_text = '';
