@@ -1,6 +1,6 @@
 # The Box World
 
-A simple lounge for hanging out with friends, where you play as a colorful box in a grey background.
+A simple online lounge for hanging out with friends, where you play as a tiny colorful box. It even has a chat! 
 
 This project was made solely for educational purposes. 
 
