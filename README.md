@@ -15,7 +15,7 @@ Have any ideas or suggestions? Check out the discussion page [here](https://gith
 
 ## At a glimpe
 
-This is my first full-stack JavaScript web application! 😄
+This is my first full-stack JavaScript web application! 😄 
 
 * **Backend** - Two Node.js servers:
   * One for serving static files (HTMLs, client-side JS scripts and CSS stylesheets)
