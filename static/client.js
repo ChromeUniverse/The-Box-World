@@ -409,7 +409,8 @@ function send_login() {
         name: user.name,
         color: user.col,
         x: user.x,
-        y: user.y
+        y: user.y,
+        room: roomName
       }
     )
   );
@@ -434,6 +435,7 @@ function sendChat() {
           id: user.id,
           name: user.name,
           message: message,
+          room: roomName
         }
       )
     );
@@ -485,24 +487,12 @@ function sendPos() {
           id: user.id, 
           name: user.name,
           x: user.x,
-          y: user.y
+          y: user.y,
+          room: roomName
         }
       )
     );
   }
-}
-
-// websockets server ping
-function ping(){
-  ws.send(
-    JSON.stringify(
-      {
-        type: 'ping',
-        id: user.id, 
-        name: user.name     
-      }
-    )
-  );
 }
 
 
