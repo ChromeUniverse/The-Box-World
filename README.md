@@ -33,7 +33,7 @@ This is my first full-stack JavaScript web application! 😄
 
 * Message type `set-id`
 
-  ```json
+  ```js
   {
     type: "set-id",
     id: "372dd9b624af"
@@ -43,7 +43,7 @@ This is my first full-stack JavaScript web application! 😄
   Sent to client on every new connection. Specficies a unique hexadecimal ID that the client uses to identify itself when exchanging other messages with the server.
 
 * Message type `
-  ```json
+  ```js
   {
     type: "set-room",
     room-state: 
@@ -71,7 +71,7 @@ This is my first full-stack JavaScript web application! 😄
   The client parses out this JSON to set the initial players positions on the p5.js canvas. 
 
 * Message type `new player`
-  ```json
+  ```js
   {
     type: "new-player",
     id: "f6759586f1a3",
@@ -87,7 +87,7 @@ This is my first full-stack JavaScript web application! 😄
   All clients add the new player to the local player list and the p5.js canvas.
 
 * Message type `room-update`
-  ```json
+  ```js
   {
     type: "set-room",
     room-state: 
@@ -122,7 +122,7 @@ This is my first full-stack JavaScript web application! 😄
   The clients use this data to update the player's position on the p5.js canvas.
 
 * Message type `down-chat`
-  ```json
+  ```js
   {
     type: "down-chat",
     id: "372dd9b624af",
@@ -136,7 +136,7 @@ This is my first full-stack JavaScript web application! 😄
   The clients parse out this JSON, display a bubble above the corresponging player and add it to the chat.
 
 * Message type `delete-player`
-  ```json
+  ```js
   {
     type: "delete-player",
     id: "5b6fd779e7ee",
@@ -153,7 +153,7 @@ This is my first full-stack JavaScript web application! 😄
 ### Client -> Server
 
 * Message type `login`
-  ```json
+  ```js
   {
     type: "login",
     id: "372dd9b624af",
@@ -173,7 +173,7 @@ This is my first full-stack JavaScript web application! 😄
 
 * Message type `move`
 
-  ```json
+  ```js
   {
     type: "move",
     id: "372dd9b624af",
@@ -190,7 +190,7 @@ This is my first full-stack JavaScript web application! 😄
   The server parses this JSON and updates the room state.
 
 * Message type `up-chat`
-  ```json
+  ```js
   {
     type: "up-chat",
     id: "372dd9b624af",
