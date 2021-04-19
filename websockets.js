@@ -1,9 +1,11 @@
 // WebSockets library
-const WebSocket = require("ws");
+const WebSocket = require('ws');
+const colors = require('colors');
 
-// Creating new WS server on port 2848
-const wss = new WebSocket.Server({ port : 2848 });
-console.log('[ WEBSOCKETS SERVER INITIALIZED ]\n')
+// Creating new WS server
+let portNumber = 2848;
+const wss = new WebSocket.Server({ port : portNumber });
+console.log("\n[ START ]".green,`[ Websockets server started on port ${portNumber}]\n`);
 
 
 // stores all active rooms
@@ -41,7 +43,7 @@ wss.on("connection",
     // store websocket in sockets list
     sockets[newID] = ws;
 
-    console.log("[ Send out ID#"+ newID +" to new client ]\n");
+    console.log("[ NEW ID ]".cyan, "[ Send out ID#" + newID.cyan + " to new client ]\n");
 
 		// Incoming data
 		ws.on("message", data => {
@@ -71,19 +73,19 @@ wss.on("connection",
         }
 
         // log new player
-        console.log("[ NEW USER ]", [newPlayerID, newPlayerName, newPlayerColor, newPlayerX, newPlayerY, roomName] + '\n');
+        console.log("[ NEW USER ]".cyan, "[", [newPlayerID, newPlayerName, newPlayerColor, newPlayerX, newPlayerY, roomName], ']\n');
 
 
         // creating new room if it doesn't already exist
         if (!rooms.hasOwnProperty(roomName)){
-          console.log('Creating room', roomName);
+          console.log('[ NEW ROOM ]'.cyan, '[ Creating room:', roomName.cyan, ']\n');
           rooms[roomName] = {};          
         } 
         
         let room = rooms[roomName];
         room[newPlayerID] = newPlayerEntry;
         
-        console.log("[ ONLINE PLAYER LIST ]", rooms);
+        console.log("[ ONLINE PLAYER LIST ]".magenta, "\n", rooms, '\n');
 
         Object.keys(room).forEach(id => {
           let client = sockets[id];
@@ -105,8 +107,7 @@ wss.on("connection",
         });        
 
         // send ID to newly logged in user
-        send_set_room(newPlayerID, roomName);
-        console.log("[ Send out initial room state to new client ]\n");
+        send_set_room(newPlayerID, roomName);        
       }  
       
       // triggered on every new 'move' event
@@ -141,7 +142,7 @@ wss.on("connection",
           // fill buffers
           sender_name = p['name'];
           message_text = dataJson['message'];
-          console.log('[ CHAT ] [ ' + sender_name + ' @ ' + roomName +' says: "' + message_text + '" ]\n');
+          console.log('[ CHAT ]'.yellow, '[', sender_name.yellow, '@', roomName.yellow, 'says:', message_text.yellow, ']\n');
 
           // rebroadcast message to all players in room
           
@@ -161,23 +162,6 @@ wss.on("connection",
             }
           });
 
-          /*
-          wss.clients.forEach(client => {
-            if (client.readyState === WebSocket.OPEN) {
-              // building JSON
-              let message = JSON.stringify(
-                {
-                  type: 'down-chat',
-                  id:sender_id,
-                  name: sender_name,
-                  message: message_text
-                }
-              );
-              // send JSON
-              client.send(message);
-            }
-          });
-          */
         }   
                    
       }
@@ -185,8 +169,6 @@ wss.on("connection",
 
 		// When the WS is closed
 		ws.on("close", () => {
-			// Print confirmation to console
-			console.log("[ CLIENT DISCONNECTED ]\n");
       // remove connection from sockets list
       // ...
       // update socket list
@@ -209,8 +191,7 @@ wss.on("connection",
 
 
 // removes player from room
-function remove_player(removedID){
-  console.log('Removing player ID#',removedID, 'from socket list');
+function remove_player(removedID){  
   
   let removed_player_room_name = '';
   let removed_player_name = '';
@@ -226,7 +207,7 @@ function remove_player(removedID){
       let p = room[id];
 
       if (id == removedID) {
-        console.log('Found removed player:',p['name'],p['id'],p['room']);
+        console.log('[ REMOVE PLAYER ]'.red, '[', p['name'].red, p['id'].red, p['room'].red, ']\n');
         removed_player_name = p['name'];
         removed_player_room_name = p['room'];
         is_done = true;
@@ -253,11 +234,9 @@ function remove_player(removedID){
     let room = rooms[roomName];
     
     if (Object.keys(room) == 0) {
-      console.log('Removing room', roomName);
+      console.log('[ EMPTY ROOM ]'.red, '[ Removing room', roomName.red, ']\n');
       is_done = true;
     } else {
-      console.log(room);
-      console.log(roomName, 'is not empty');
       // add active rooms
       new_rooms[roomName] = room;
     }
