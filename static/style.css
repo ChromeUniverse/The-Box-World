@@ -33,7 +33,6 @@ canvas {
 
 .chat {
   border-radius: 10px;
-  /* position: relative;     */
   height: 530px;
   width: 290px;
   background-color: rgb(46, 63, 105);
@@ -55,12 +54,9 @@ canvas {
 }
 
 .chat .messages { 
-  /* position: absolute; */
-  /* top: 40px;  */
   height: 440px;
   width: 255px;
   margin-left: 20px;
-  /* padding-left: 0px; */
   
   color: white;
   overflow-y: auto;
@@ -86,16 +82,11 @@ canvas {
 }
 
 .chat .chat-bottom {
-  /* position: absolute; */
-  /* bottom: 0; */
-  /* left: 0; */
-
-  /*padding: 10px 10px 10px 10px;*/
   height: 50px;
   width: 100%;
   margin-bottom: 10px;
   
-  /* background-color: transparent; */
+  background-color: transparent;
   /* background-color: rgb(47, 161, 66); */
 
   display: flex;
@@ -105,11 +96,6 @@ canvas {
 }
 
 .chat-bottom .msg-input {
-  /* position: absolute; */
-  
-  /* bottom: 8px; */
-  /* left: 15px; */
-
   height: 35px;
   width: 200px;
   margin-right: 5px;
@@ -120,14 +106,11 @@ canvas {
   border: 0px;
   border-radius: 5px;
   color: white;
-  padding: 8px;
+  padding-left: 8px;
 }
 
 .chat-bottom .send {
-  /* position: absolute; */
-  /* bottom: 8px; */
-  /* right: 15px;     */
-  height: 35px;
+  height: 37px;
   width: 55px;
   padding: 0px;
 
@@ -154,9 +137,9 @@ canvas {
 .chat-bottom .send:focus {  
   outline: none;
 }
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+::placeholder { 
   color: rgb(160, 160, 160);
-  opacity: 1; /* Firefox */
+  opacity: 1;
 }
 
 
@@ -171,8 +154,6 @@ canvas {
   }
 
   .chat {
-    border-radius: 10px;
-    /* position: relative;     */
     height: 450px;
     width: 600px;
   
@@ -194,7 +175,6 @@ canvas {
 
   .chat-bottom .msg-input {
     font-size: 20px;
-    height: 35px;
     width: 490px;
     margin-right: 5px;
       
@@ -202,12 +182,8 @@ canvas {
   
   .chat-bottom .send {
     font-size: 20px;
-    height: 35px;
     width: 80px;
-    padding: 0px;
     
-    border: 0px;
-    border-radius: 5px;
     color:white;
   }
 }
