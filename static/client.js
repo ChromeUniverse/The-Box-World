@@ -17,8 +17,8 @@ const speedX = 5;
 const speedY = 5;
 
 // websockets server
-// const server = 'localhost';
-const server = '34.200.98.64';
+const server = 'localhost';
+// const server = '34.200.98.64';
 
 // local list of players
 let players = {};
@@ -468,6 +468,12 @@ function move() {
       user.y = canvasH-thingyH/2;
     }
   }
+  
+  if (keyIsDown(13)){
+    // send chat when Enter is pressed    
+    sendChat();
+  }
+  
   
   return moved;
 }
