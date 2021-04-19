@@ -184,11 +184,6 @@ ws.addEventListener("message", msg => {
     } else {
       console.log('room is empty');
     }
-
-
-    // start pinging the server every second or so
-    let pingInterval = 1000;
-    setInterval(() => { ping();}, pingInterval);
   }
 
   // update room state
