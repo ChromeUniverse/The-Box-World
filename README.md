@@ -6,6 +6,13 @@ This project was made solely for educational purposes.
 
 Have any ideas or suggestions? Check out the discussion page [here](https://github.com/ChromeUniverse/The-Box-World/discussions).
 
+## Gallery
+
+### Room page
+
+![here](https://media.discordapp.net/attachments/760252264723644426/833543383335043113/unknown.png?width=800&height=500)
+
+
 ## At a glimpe
 
 This is full-stack JavaScript web application.
@@ -87,8 +94,3 @@ _Coming soon_
 * Far out ideas
   * Add WebRTC-based voice chat
  
-## Gallery
-
-### Room view
-
-![here](https://media.discordapp.net/attachments/760252264723644426/832846019070394428/unknown.png?width=800&height=400)
