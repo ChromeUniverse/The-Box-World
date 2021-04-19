@@ -52,7 +52,7 @@ _Coming soon_
 └── .gitignore
 ```
 
-## Working features
+## Progress
 
 * Functional multiplayer
 * Periodic server pinging and player timeout
