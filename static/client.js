@@ -256,7 +256,7 @@ ws.addEventListener("message", msg => {
 
       // looping over messages sent by current sender
       var x = document.getElementsByClassName('alert');
-      // styling: sender name (already in bold) gets sender color
+      // styling: alerts receive a gray color
       for (let i = 0; i < x.length; i++) {
         x[i].style.color = "rgb(158, 158, 158)";
       }
@@ -385,21 +385,23 @@ ws.addEventListener("message", msg => {
         // adding new message to chat div
         chat.appendChild(alert);
 
+        if ( bottom ) {      
+          room_chat.scrollTop = room_chat.scrollHeight;
+        } 
+
         // looping over messages sent by current sender
         var x = document.getElementsByClassName('alert');
-        // styling: sender name (already in bold) gets sender color
+        // styling: alerts receive a gray color
         for (let i = 0; i < x.length; i++) {
           x[i].style.color = "rgb(158, 158, 158)";
         }
           
-        } else {
-          // add active players to copy of player list        
-          players_copy[p.id] = p;      
-        }
+      } else {
+        // add active players to copy of player list        
+        players_copy[p.id] = p;      
+      }
 
-        if ( bottom ) {      
-          room_chat.scrollTop = room_chat.scrollHeight;
-        } 
+        
 
     });
 
