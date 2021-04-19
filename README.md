@@ -17,16 +17,15 @@ Have any ideas or suggestions? Check out the discussion page [here](https://gith
 
 This is full-stack JavaScript web application.
 
-* **Backend** - Two node.js servers:
-  * One for serving static files (HTMLs and JS scripts)
+* **Backend** - Two Node.js servers:
+  * One for serving static files (HTMLs, client-side JS scripts and CSS stylesheets)
   * Another one for handling real-time communication over Websockets and room state
 
-  Libraries used: [Express](https://www.npmjs.com/package/express) for static file server, [ws](https://www.npmjs.com/package/ws) for websockets server and [forever](https://www.npmjs.com/package/forever) for daemonizing scripts
+  Libraries used: [Express](https://www.npmjs.com/package/express) for static file server, [ws](https://www.npmjs.com/package/ws) for websockets server and [pm2](https://www.npmjs.com/package/pm2) for daemonizing scripts
 
 * **Frontend**
-  * [p5.js](https://p5js.org/) for graphics
-  * Minimal HTML for the home page and room page with p5.js canvas 
-  * No stylesheets/CSS yet
+  * Minimal HTML for the home page (no styling yet) - just a simple POST request form with the user's name and room name.
+  * Room page uses CSS with Flexbox for styling and a client-side script with a [p5.js](https://p5js.org/) canvas for graphics and a websocket client
 
 ## Websockets message exchange model
 
