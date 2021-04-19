@@ -59,7 +59,7 @@ _Coming soon_
 * Working chat with message bubble
 * Two players can now have the same name
 * Users automatically time out and and are removed from the room after 5 seconds of inactivity
-* Home page has some ✨fancy CSS✨ styling
+* Room page has some ✨fancy CSS✨ styling
 * Changed package daemonizer to [PM2](https://pm2.keymetrics.io/)
 * Chat now displays alert messages (e.g.:_Player joined the room_ and _Player has left the room_) 
 * Added chat auto-scroll (when receiving new messages) and improved chat styles
