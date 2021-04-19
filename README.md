@@ -36,9 +36,41 @@ _Coming soon_
 
 ### Server -> Client
 
-## Usage
+## Usage (Ubuntu Linux)
 
-_Coming soon_
+* Clone this repo and `cd` into it
+
+`git clone https://github.com/ChromeUniverse/The-Box-World.git`
+
+`cd The-Box-World`
+
+* Make sure you have Node.js installed
+
+`node --version`
+
+(Install it if haven't already)
+
+`sudo apt update`
+
+`sudo apt install nodejs`
+
+* Install packages with npm
+
+`sudo npm install -g`
+
+(If that doesn't work, you'll have to install packages manually)
+
+`sudo npm install express -g`
+
+`sudo npm install ws -g`
+
+`sudo npm install pm2 -g`
+
+* Run server scripts
+
+`pm2 start app.js`
+
+`pm2 start websockets.js`
 
 ## Folder Structure
 
