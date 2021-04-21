@@ -179,15 +179,14 @@ This is my first full-stack JavaScript web application! 😄
     id: "372dd9b624af",
     name: "Lucca",
     color: "#0B7A75",
-    x: 258,
-    y: 225,
+    keys: "wasd"
     room: "room1"
   }
   ```
 
-  Sent to the server everytime the user presses the arrow keys. Constains the user's new position.
+  Sent to the server when the user presses the arrow keys.
 
-  The server parses this JSON and updates the room state.
+  The server parses this JSON and updates the room state accordingly.
 
 * Message type `up-chat`
   ```js
@@ -274,15 +273,14 @@ This is my first full-stack JavaScript web application! 😄
 * Room page now uses Flexbox-based styling
 * Added simpler (and more efficient/more effective!) player timeout and remove functions
 * Added multiple room functionality
+* Implemented fully server-side room state processing (client now only sends keypresses to server)
 
 ## Todo
 
-* High priority
-  * Improve message exchange model 
-  * Implement full server-side room state processing 
-  * Add actual fun features (games, video watch-along, something idk)
+<!-- * High priority -->
 
 * Important      
+  * Add actual fun features (games, video watch-along, something idk)
   * Improve styles
     * Make a half decent UI with some ✨fancy CSS✨ for the home page
       
