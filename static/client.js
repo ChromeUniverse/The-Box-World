@@ -18,7 +18,8 @@ const speedY = 5;
 
 // websockets server
 // const server = 'localhost';
-const server = '34.200.98.64';
+// const server = '34.200.98.64';
+const server = '18.229.74.58';
 
 // local list of players
 let players = {};
