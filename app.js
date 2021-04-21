@@ -11,13 +11,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // color palette
 const palette = [
   "#F18F01", // Tangerine  
-  "#99C24D", // Atlantis Green
-  "#2F2D2E", // Toledo  
+  "#99C24D", // Atlantis Green 
   "#0B7A75", // Surfie Green
   "#7B2D26", // Lusty
   "#BFCDE0", // Link Water
   "#729B79", // Oxley
   "#59D2FE", // Maya Blue
+  "#963484", // Violet Crayola
+  "#6AB547", // Green RYB
+  "#336699", // Lapis Lazuli
+  "#E07A5F", // Terra Cotta
+  "#3D405B", // Independence
+  "#E84855", // Red Crayola
+  "#D95D39", // Flame
+  "#FAA381", // Light Salmon
+  "#DE639A", // China Pink
 ];
 
 // "Redirecting" GET requests to '/'
