@@ -4,22 +4,36 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="index.css">
   <title>The Box World</title>
 </head>
 <body>
-  <h1>The Box World</h1>
-  <form action="/" method="POST">
-    <label for="username">Username</label>
-    <br>
-    <input type="text" name="username" id="">
-    <br>
-    <br>
-    <label for="room">Room</label>
-    <br>
-    <input type="text" name="room" id="">
-    <br>
-    <br>
-    <button type="submit">Join Room</button>
-  </form>
+  <p class="header"><b>The Box World</b></p>
+
+  <div class="stuff">
+    <form action="/" method="POST">
+
+      <div class="line">
+        <label class="label" for="username">Username</label> 
+        <input class="input" type="text" name="username" id=""> 
+      </div>
+
+      <div class="line">
+        <label class="label" for="room">Room</label>
+        <input class="input" type="text" name="room" id="">
+      </div>
+      
+      <div class="send-button">
+        <button type="submit">Join Room</button>
+      </div>
+      
+    </form>
+  </body>
+  </div>
+
 </body>
 </html>
