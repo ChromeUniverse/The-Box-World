@@ -273,22 +273,23 @@ This is my first full-stack JavaScript web application! 😄
 * Room page now uses Flexbox-based styling
 * Added simpler (and more efficient/more effective!) player timeout and remove functions
 * Added multiple room functionality
+* Added responsive design for mobile devices
 * Implemented fully server-side room state processing (client now only sends keypresses to server)
+* Added styles for main page 
 
 ## Todo
 
 <!-- * High priority -->
 
 * Important      
-  * Add actual fun features (games, video watch-along, something idk)
-  * Improve styles
-    * Make a half decent UI with some ✨fancy CSS✨ for the home page
-      
+  * Add actual fun features (games, video watch-along, something idk)      
+  * Improve responsive design
+    * Button for showing/hiding chat
 
 * Not so high priority
   * Add buttons for navigation
     * Change room
-    * Return to home page
+    * Return to home page    
 
 * Far out ideas
   * Add WebRTC-based voice chat

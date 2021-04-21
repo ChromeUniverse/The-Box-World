@@ -1,11 +1,14 @@
 # Static 
 
-Static files are stored here.
+Static files for the Node.js Express server are stored here.
 
 ```
 .
-├── index.html              # page index
-├── room.html               # room 
-├── client.js               # p5.js and websockets
+├── index.html              # main page
+├── empty.html              # main page (showing empty form data alert)
+├── room.html               # room page
+├── client.js               # client-side code, including the p5.js canvas and websocket client
+├── client.js
+└── style.css               # room page stylesheet
 
 ```
