@@ -467,33 +467,24 @@ function sendChat() {
 // change user position based on keypresses
 function keys() {
   let moved = false;
-  if (keyIsDown(LEFT_ARROW)) {
-    moved = true;
-    user.x -= speedX;  
-    if (user.x < thingyW/2) {
-      user.x = thingyW/2;
-    }
-  }
-  if (keyIsDown(RIGHT_ARROW)) {
-    moved = true;
-    user.x += speedX;  
-    if (user.x > canvasW-thingyW/2) {
-      user.x = canvasW-thingyW/2;
-    }
-  }
+
+  let keystrokes = '';
+  
   if (keyIsDown(UP_ARROW)) {
     moved = true;
-    user.y -= speedY;  
-    if (user.y < thingyH/2) {
-      user.y = thingyH/2;
-    }
+    keystrokes += 'w';    
+  }
+  if (keyIsDown(LEFT_ARROW)) {
+    moved = true;
+    keystrokes += 'a';
   }
   if (keyIsDown(DOWN_ARROW)) {
     moved = true;
-    user.y += speedY;  
-    if (user.y > canvasH-thingyH/2) {
-      user.y = canvasH-thingyH/2;
-    }
+    keystrokes += 's';
+  }
+  if (keyIsDown(RIGHT_ARROW)) {
+    moved = true;
+    keystrokes += 'd';
   }
   
   if (keyIsDown(13)){
@@ -502,25 +493,30 @@ function keys() {
   }
   
   
-  return moved;
+  return [ moved, keystrokes ];
 }
 
 // sends current position 
-function sendPos() {
-  if (keys(user)) {
+function sendKeys() {
+
+  let data = keys();
+  let moved = data[0];
+  let keystrokes = data[1];
+
+  if (moved) {
     ws.send(
       JSON.stringify(
         {
           type: 'move',
           id: user.id, 
           name: user.name,
-          x: user.x,
-          y: user.y,
+          keys: keystrokes,
           room: roomName
         }
       )
     );
   }
+
 }
 
 function autoscroll() {
@@ -554,7 +550,7 @@ function draw() {
   // only run with websocket is open
   if (ws.readyState == 1) {
     // send position via websockets
-    sendPos(user);
+    sendKeys(user);
   }
 
   

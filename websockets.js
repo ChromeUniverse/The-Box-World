@@ -14,6 +14,18 @@ let rooms = {};
 // connection pool
 let sockets = {}
 
+// canvas properties
+const canvasW = 600; 
+const canvasH = 530;
+
+// thingy dimensions
+const thingyW = 40;
+const thingyH = 40;
+
+// player speed
+const speedX = 5;
+const speedY = 5;
+
 
 // genreate unique ID for players
 function getUniqueID() {
@@ -117,10 +129,34 @@ wss.on("connection",
         let roomName = dataJson['room'];
         let room = rooms[roomName];
 
+        let keystrokes = dataJson['keys'];
+
         if (room.hasOwnProperty(ID)) {
           let p = room[ID];
-          p['x'] = dataJson['x'];
-          p['y'] = dataJson['y'];        
+          let x = p['x'];
+          let y = p['y'];
+
+          // check keystrokes
+          if (keystrokes.includes('w')) {            
+            y-= speedY; 
+            if (y < thingyH/2) { y = thingyH/2; }
+          }
+          if (keystrokes.includes('a')) {
+            x-= speedX; 
+            if (x < thingyW/2) { x = thingyW/2; }                        
+          }
+          if (keystrokes.includes('s')) {
+            y+= speedY; 
+            if (y > canvasH-thingyH/2) { y = canvasH-thingyH/2; }
+          }
+          if (keystrokes.includes('d')) {
+             x+= speedX; 
+             if (x > canvasW-thingyW/2) { x = canvasW-thingyW/2; }
+          }
+
+          // update position
+          p['x'] = x;
+          p['y'] = y;        
         }
              
       }      
