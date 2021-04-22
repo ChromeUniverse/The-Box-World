@@ -42,7 +42,7 @@ This is my first full-stack JavaScript web application! 😄
 
   Sent to client on every new connection. Specficies a unique hexadecimal ID that the client uses to identify itself when exchanging other messages with the server.
 
-* Message type `
+* Message type `set-room`
   ```js
   {
     type: "set-room",
@@ -89,7 +89,7 @@ This is my first full-stack JavaScript web application! 😄
 * Message type `room-update`
   ```js
   {
-    type: "set-room",
+    type: "room-update",
     room-state: 
     {
       "372dd9b624af": {
@@ -179,7 +179,7 @@ This is my first full-stack JavaScript web application! 😄
     id: "372dd9b624af",
     name: "Lucca",
     color: "#0B7A75",
-    keys: "wasd"
+    keys: "wasd",
     room: "room1"
   }
   ```
