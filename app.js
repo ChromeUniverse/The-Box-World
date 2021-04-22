@@ -28,6 +28,23 @@ const palette = [
   "#DE639A", // China Pink
 ];
 
+// regex magic to remove whitespaces
+function isEmpty(u,r) {
+  let name_empty = u.replace(/\s/g, '').length == 0;
+  let room_empty = r.replace(/\s/g, '').length == 0;
+
+  if (name_empty) {return true}
+  else if (room_empty) {return true}
+  else {return false}
+}
+
+// regex magic to match letters and numbers
+function letters_digits(str) {
+  return str.match("^[A-Za-z0-9]+$");
+}
+
+
+
 // "Redirecting" GET requests to '/'
 app.get('/', (req, res) => {
   res.status(200);
@@ -48,30 +65,32 @@ app.post('/', (req, res) => {
   let room = formData['room'];
   console.log('New user', username, 'requesting to join room', room);
 
-  function isEmpty(u,r) {
-    let name_empty = u.replace(/\s/g, '').length == 0;
-    let room_empty = r.replace(/\s/g, '').length == 0;
-
-    if (name_empty) {return true}
-    else if (room_empty) {return true}
-    else {return false}
-  }
 
   // checking for whitespaces
-  if (!isEmpty(username,room)) {
-
-    // select random color from palette 
-    let playerColor = palette[Math.floor(Math.random() * palette.length)];
-
-    // replacing USERNAME, COLOR, ROOM with actual player name and random color
-    res.status(200);
-    let data = fs.readFileSync(__dirname + '/static/room.html');
-    res.send(data.toString().replace('USERNAME', username).replace('COLOR', playerColor).replace('ROOM', room));
-  
-  } else {
-    res.status(400);  
+  if (isEmpty(username,room)) {
+    res.status(200);  
     res.sendFile(__dirname + '/static/empty.html');
+    return;
   }
+
+  // checking for letter and digits
+  if (!letters_digits(username) || !letters_digits(room)) {
+    res.status(200);  
+    res.sendFile(__dirname + '/static/letters_digits.html');
+    return;
+  }
+
+
+  // select random color from palette 
+  let playerColor = palette[Math.floor(Math.random() * palette.length)];
+
+  // replacing USERNAME, COLOR, ROOM with actual player name and random color
+  res.status(200);
+  let data = fs.readFileSync(__dirname + '/static/room.html');
+  res.send(data.toString().replace('USERNAME', username).replace('COLOR', playerColor).replace('ROOM', room));
+  return;
+  
+
 })
 
 // Start server
