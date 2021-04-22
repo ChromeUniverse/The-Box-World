@@ -279,17 +279,18 @@ This is my first full-stack JavaScript web application! 😄
 
 ## Todo
 
-<!-- * High priority -->
+* Add actual fun features (games, video watch-along, something idk)      
+* "Crown" Player system and special privileges
+  * First player to enter the room has the crown - when they leave, crown is passed on to the second player, third, and so on, until the room is empty
+  * Crown player can kick other players from the room
+* Improve UI 
+  * Mobile 
+    * Actual control buttons
+    * Button for showing/hiding chat in mobile
 
-* Important      
-  * Add actual fun features (games, video watch-along, something idk)      
-  * Improve responsive design
-    * Button for showing/hiding chat
-
-* Not so high priority
-  * Add buttons for navigation
-    * Change room
-    * Return to home page    
+* Add navigation buttons
+  * Change room
+  * Return to home page   
 
 * Far out ideas
   * Add WebRTC-based voice chat
