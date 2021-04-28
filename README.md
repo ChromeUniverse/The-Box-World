@@ -6,6 +6,8 @@ This project was made solely for educational purposes.
 
 Have any ideas or suggestions? Check out the discussion page [here](https://github.com/ChromeUniverse/The-Box-World/discussions).
 
+This project was partly inspired by Eduardo's [Websockets chat app](https://github.com/qrno/websockets-chat) and [Websockets lounge](https://github.com/qrno/django-websockets).
+
 ## Gallery
 
 ### Room page
