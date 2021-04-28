@@ -216,7 +216,7 @@ This is my first full-stack JavaScript web application! 😄
 
 `node --version`
 
-(Install it if haven"t already)
+(Install it if haven't already)
 
 `sudo apt update`
 
@@ -226,7 +226,7 @@ This is my first full-stack JavaScript web application! 😄
 
 `sudo npm install -g`
 
-(If that doesn"t work, you"ll have to install packages manually)
+(If that doesn't work, you'll have to install packages manually)
 
 `sudo npm install express -g`
 
@@ -234,7 +234,7 @@ This is my first full-stack JavaScript web application! 😄
 
 `sudo npm install pm2 -g`
 
-* Run server scripts
+* Start server scripts with PM2
 
 `pm2 start app.js`
 
@@ -247,7 +247,7 @@ This is my first full-stack JavaScript web application! 😄
 .
 ├── bash                    # bash shell scripts
 ├── node modules            # node.js packages
-├── static                  # static files
+├── static                  # static files (HTMLs, client-side scripts and stylesheets)
 |
 ├── package.json            # npm packages
 ├── package-lock.json
@@ -261,13 +261,15 @@ This is my first full-stack JavaScript web application! 😄
 
 ## Progress
 
+As you can see, a fair amount of progress has been made with this project.
+
 * Functional multiplayer
 * Periodic server pinging and player timeout
 * Working chat with message bubble
 * Two players can now have the same name
 * Users automatically time out and and are removed from the room after 5 seconds of inactivity
 * Room page has some ✨fancy CSS✨ styling
-* Changed package daemonizer to [PM2](https://pm2.keymetrics.io/)
+* Changed script daemonizer module to [PM2](https://pm2.keymetrics.io/)
 * Chat now displays alert messages (e.g.:_Player joined the room_ and _Player has left the room_) 
 * Added chat auto-scroll (when receiving new messages) and improved chat styles
 * Room page now uses Flexbox-based styling
