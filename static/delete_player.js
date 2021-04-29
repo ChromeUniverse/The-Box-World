@@ -1,5 +1,5 @@
 function delete_player(dataJson) {
-let removedID = dataJson['id'];    
+  let removedID = dataJson['id'];    
 
   // creating copy of players list
   let players_copy = {};

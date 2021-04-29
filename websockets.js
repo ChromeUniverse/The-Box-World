@@ -138,20 +138,20 @@ wss.on("connection",
 
           // check keystrokes
           if (keystrokes.includes('w')) {            
-            y-= speedY; 
+            y -= speedY; 
             if (y < thingyH/2) { y = thingyH/2; }
           }
           if (keystrokes.includes('a')) {
-            x-= speedX; 
+            x -= speedX; 
             if (x < thingyW/2) { x = thingyW/2; }                        
           }
           if (keystrokes.includes('s')) {
-            y+= speedY; 
+            y += speedY; 
             if (y > canvasH-thingyH/2) { y = canvasH-thingyH/2; }
           }
           if (keystrokes.includes('d')) {
-             x+= speedX; 
-             if (x > canvasW-thingyW/2) { x = canvasW-thingyW/2; }
+            x += speedX; 
+            if (x > canvasW-thingyW/2) { x = canvasW-thingyW/2; }
           }
 
           // update position
