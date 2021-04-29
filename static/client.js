@@ -17,100 +17,15 @@ const speedX = 5;
 const speedY = 5;
 
 // websockets server
-// const server = 'localhost';
+const server = 'localhost';
+// const server = '192.168.1.109'
 // const server = '34.200.98.64';
-const server = '18.229.74.58';
+// const server = '18.229.74.58';
 
 // local list of players
 let players = {};
 
-/*
 
-**************** Player Class ****************
-
-*/
-
-class Player{
-  // creates new player instance
-  constructor(id, name, col, x, y){
-    this.id = id;
-    this.name = name;
-    this.col = col; // color
-    this.x = x;
-    this.y = y;
-    this.has_msg = false;
-    this.msg_text = '';
-    this.msg_time = 0;
-  }
-
-  // renders the player on the canvas
-  display() {
-    
-    // highlight user with a thin white border
-    if (this.id == user.id) {
-      strokeWeight(3);
-      stroke('rgb(38, 38, 61)');
-    } else {
-      noStroke();
-    }
-    
-    // draw thingy
-    fill(this.col);
-    rectMode(CENTER);
-    rect(this.x, this.y, thingyW, thingyH, 10, 10);
-
-    noStroke();
-    // show player name 
-    textSize(20);
-    fill(color(255));
-    textAlign(CENTER, BOTTOM);
-    text(this.name, this.x, this.y+thingyH/2+30);  
-    
-    let time_now = Math.round(Date.now()/1000);
-    let timeout = max(user.msg_text.length * 1/30, 4);
-    
-    if (this.has_msg == true && time_now - this.msg_time < timeout) {      
-      
-      textSize(18);
-      fill(color(255));
-      triangle(this.x + 30, this.y-thingyH/2+20, this.x + 30, this.y - thingyH/2-10, this.x + 50, this.y - thingyH/2-10);
-      
-      if (this.x + textWidth(this.msg_text) + 60 > canvasW) {
-        
-        // display text box
-        rectMode(CORNER);
-        noStroke();
-        fill(255);
-        rect(canvasW - textWidth(this.msg_text) - 30, this.y-40, textWidth(this.msg_text)+30, textSize(this.msg_text)+10, 10, 10);
-
-        // display message text
-        noStroke();
-        fill(this.col);
-        textAlign(RIGHT, TOP);
-        text(this.msg_text, canvasW - 15, this.y-35);
-        
-      } else {
-        
-        // display text box
-        rectMode(CORNER);
-        noStroke();
-        fill(255);
-        rect(this.x + 30, this.y-40, textWidth(this.msg_text)+30, textSize(this.msg_text)+10, 10, 10);
-
-        // display message text
-        noStroke();
-        fill(this.col);
-        textAlign(LEFT, TOP);
-        text(this.msg_text, this.x + 45, this.y-35);
-      
-      }
-      
-    } else {
-      this.has_msg = false;
-      this.msg_text = '';
-    }
-  }
-}
 
 
 /*
@@ -207,208 +122,11 @@ ws.addEventListener("message", msg => {
   }
 
   // update room state
-  if (dataType == 'new-player'){
-  
-    // get new player attributes
-    newPlayer_ID = dataJson['id'];
-    newPlayer_name = dataJson['name'];
-    newPlayer_color = dataJson['color'];
-    newPlayer_X = dataJson['x'];
-    newPlayer_Y = dataJson['y'];
+  if (dataType == 'new-player') {new_player(dataJson);}
 
-    // create new player and add it to players list
-    // (but only if it's not the user)
-    if (newPlayer_ID != user.id) {
-      newPlayer = new Player(newPlayer_ID, newPlayer_name, newPlayer_color, newPlayer_X, newPlayer_Y);      
-      players[newPlayer_ID] = newPlayer;
+  if (dataType == 'down-chat')  {down_chat(dataJson);}
 
-      console.log('Player ' + newPlayer_name + ' has left the room. ');
-
-      let room_chat = document.getElementById("room-chat"); 
-    
-      function isAtBottom(room_chat) {                
-        let expression = room_chat.scrollTop + room_chat.clientHeight + 5 > room_chat.scrollHeight;
-        return expression;      
-      }
-
-      let bottom = isAtBottom(room_chat);
-
-      // Show a special message on chat
-      // format:
-      //   <p><i style="color: rgb(158, 158, 158);" class="alert">Lucca has joined the room.</i></p>
-      // 
-      let alert = document.createElement('p');
-
-      let alert_message = document.createElement('i');
-      // setting class name
-      alert_message.className = "alert";
-
-      let alert_message_text = document.createTextNode(newPlayer_name + ' has joined the room.');
-      
-      // add message text to message
-      alert_message.appendChild(alert_message_text);
-      // add message to alert
-      alert.appendChild(alert_message);
-
-      // getting chat div
-      let chat = document.getElementById("room-chat");
-      // adding new message to chat div
-      chat.appendChild(alert);
-
-      // looping over messages sent by current sender
-      var x = document.getElementsByClassName('alert');
-      // styling: alerts receive a gray color
-      for (let i = 0; i < x.length; i++) {
-        x[i].style.color = "rgb(158, 158, 158)";
-      }
-
-      if ( bottom ) {      
-        room_chat.scrollTop = room_chat.scrollHeight;
-      } 
-    }    
-    
-  }
-
-  if (dataType == 'down-chat') {      
-    // parse out message
-    let senderID = dataJson['id'];    
-    let sender = players[senderID];     
-
-    let message_text = dataJson['message'];
-    console.log(sender.name + ' sent a message: "' + message_text + '"');
-
-    // updating sender attributes
-    sender.has_msg = true;
-    sender.msg_text = dataJson['message'];
-    sender.msg_time = Math.round(Date.now()/1000)
-
-    // adding message to room chat    
-
-
-    let room_chat = document.getElementById("room-chat"); 
-    
-    function isAtBottom(room_chat) {                
-      let expression = room_chat.scrollTop + room_chat.clientHeight + 5 > room_chat.scrollHeight;
-      return expression;      
-    }
-
-    let bottom = isAtBottom(room_chat);
-
-    // create new message in DOM and add it to chat        
-
-    // new message on the DOM looks like:
-    // <p>
-    //  <b class="e28bf531740a" style="color: rgb(153, 194, 77);">Lucca</b>: eo
-    // </p>
-
-    // create parent paragraph tag
-    let new_message = document.createElement("p");
-
-    // create internal bold tag for sender name
-    let new_message_sender = document.createElement("b")
-    // adding sender ID as class name
-    new_message_sender.className = senderID;
-
-    // creating sender's name
-    let new_message_sender_name = document.createTextNode(sender.name);
-    // adding sender name to sender
-    new_message_sender.appendChild(new_message_sender_name);
-
-    // adding sender to message
-    new_message.appendChild(new_message_sender);
-
-    // creating message text
-    let new_message_text = document.createTextNode(': ' + message_text);
-    // adding message text to actual message
-    new_message.appendChild(new_message_text);
-
-    // getting chat div
-    let chat = document.getElementById("room-chat");
-    // adding new message to chat div
-    chat.appendChild(new_message);
-
-    // looping over messages sent by current sender
-    var x = document.getElementsByClassName(senderID);
-    // styling: sender name (already in bold) gets sender color
-    for (let i = 0; i < x.length; i++) {
-      x[i].style.color = sender.col;
-    }    
-    
-    if ( bottom ) {      
-      room_chat.scrollTop = room_chat.scrollHeight;
-    } 
-  }
-
-  if (dataType == 'delete-player') {
-
-    let removedID = dataJson['id'];    
-
-    // creating copy of players list
-    let players_copy = {};
-  
-    // looping through players
-    Object.values(players).forEach(p => {
-
-      if (p.id === removedID) {        
-        removed_name = p['name'];
-        // skip over removed played
-        console.log('Player ' + removed_name + ' has left the room. ');
-        
-        let room_chat = document.getElementById("room-chat"); 
-    
-        function isAtBottom(room_chat) {                
-          let expression = room_chat.scrollTop + room_chat.clientHeight + 5 > room_chat.scrollHeight;
-          return expression;      
-        }
-
-        let bottom = isAtBottom(room_chat);
-
-
-        // Show a special message on chat
-        // format:
-        //   <p><i style="color: rgb(158, 158, 158);" class="alert">Lucca has joined the room.</i></p>
-        // 
-        let alert = document.createElement('p');
-
-        let alert_message = document.createElement('i');
-        // setting class name
-        alert_message.className = "alert";
-
-        let alert_message_text = document.createTextNode(removed_name + ' has left the room.');
-        
-        // add message text to message
-        alert_message.appendChild(alert_message_text);
-        // add message to alert
-        alert.appendChild(alert_message);
-
-        // getting chat div
-        let chat = document.getElementById("room-chat");
-        // adding new message to chat div
-        chat.appendChild(alert);
-
-        if ( bottom ) {      
-          room_chat.scrollTop = room_chat.scrollHeight;
-        } 
-
-        // looping over messages sent by current sender
-        var x = document.getElementsByClassName('alert');
-        // styling: alerts receive a gray color
-        for (let i = 0; i < x.length; i++) {
-          x[i].style.color = "rgb(158, 158, 158)";
-        }
-          
-      } else {
-        // add active players to copy of player list        
-        players_copy[p.id] = p;      
-      }
-
-        
-
-    });
-
-    // update players list
-    players = players_copy;
-  }
+  if (dataType == 'delete-player') {delete_player(dataJson);}
 
 });
 
@@ -520,10 +238,6 @@ function sendKeys() {
 
 }
 
-function autoscroll() {
-  
-}
-
 /*
 
 **************** Main Program ****************
@@ -554,7 +268,9 @@ function draw() {
     sendKeys(user);
   }
 
-  
+
+  // rendering players on screen
+
   let render = [];
 
   Object.values(players).forEach(p => {
